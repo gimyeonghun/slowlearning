@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/base.astro
 title: 100 days of Duolingo
 published_date: 2024-05-07T22:34:05.468207+00:00
 ---
