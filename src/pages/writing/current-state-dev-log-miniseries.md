@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Launching the Dev Log Miniseries
 published_date: 2022-12-29T00:00:00+00:00
 ---

@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: User Sorting in Swift and Core Data
 published_date: 2023-07-06T10:23:10.133182+00:00
 ---

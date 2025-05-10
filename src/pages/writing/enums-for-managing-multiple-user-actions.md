@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Enums for Managing Multiple User Actions
 published_date: 2023-07-30T10:10:01.582179+00:00
 ---

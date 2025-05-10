@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: CBCT
 published_date: 2023-05-23T07:28:35.653974+00:00
 ---

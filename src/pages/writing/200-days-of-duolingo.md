@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: 200 days of Duolingo
 published_date:
 ---

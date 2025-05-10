@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Weeknotes № 4
 published_date: 2023-09-10T13:11:45.755320+00:00
 ---

@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Weeknotes № 1
 published_date: 2023-07-09T11:32:28.033758+00:00
 ---

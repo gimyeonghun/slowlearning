@@ -1,7 +1,25 @@
 ---
+const navigation_links = [
+    {"label": "Home", "href": ""},
+    {"label": "About", "href": "about"},
+    {"label": "Blog", "href": "blog"}
+];
 
+const { pathname } = Astro.url;
 ---
+<header class="flex justify-center gap-10 items-center py-8 bg-brown-200">
+    <a href="/" class="flex justify-center gap-2 items-center">
+        <!--<img style="height: 50%" src="/assets/sloth_1f9a5.png" />-->
+        <h1 class="text-xl font-serif font-semibold text-brown-50">Slow Learner's Quest</h1>
+    </a>
+</header>
+<nav class="px-2 py-4 text-lg bg-linear-to-t from-gray-300 to-slate-100">
+    <ul class="flex justify-start gap-1 flex-nowrap">
+        { navigation_links.map((link) => (
+                <li>
+                    <a href={`/${link.href}`} aria-selected={pathname.slice(1) === link.href ? 'true' : 'false'} class="rounded-full py-2 px-4 hover:bg-gray-300 aria-selected:text-white aria-selected:inset-shadow-sm aria-selected:bg-linear-to-t from-gray-500/40 to-slate-400/50 ">{link.label}</a>
+                </li>
+        ))}
+    </ul>
 
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/blog/">Blog</a>
+</nav>

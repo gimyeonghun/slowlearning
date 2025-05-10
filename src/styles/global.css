@@ -1,10 +1,5 @@
-@font-face {
-    font-family: "Instrument Serif";
-    src: url("/fonts/InstrumentSerif-Regular.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @font-face {
     font-family: "Source Sans 3";
@@ -14,61 +9,69 @@
     font-display: swap;
 }
 
-html {
-    background-color: #FFDFA9;
-    font-family: sans-serif;
-    color: #212121;
+@theme {
+    --font-sans: "Source Sans 3", sans-serif;
+    --color-brown-50: #F8F5F2;
+    --color-brown-100: #FFFFFF;
+    --color-brown-200: #594F4B;
+    --color-stone: #3A3A39;
 }
 
-body {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 80ch;
-    padding: 1rem;
-    line-height: 1.5;
-    font-family: "Source Sans 3", sans-serif;
-}
+/*html {*/
+/*    background-color: #FFDFA9;*/
+/*    font-family: sans-serif;*/
+/*    color: #212121;*/
+/*}*/
 
-* {
-    box-sizing: border-box;
-}
+/*body {*/
+/*    margin: 0 auto;*/
+/*    width: 100%;*/
+/*    max-width: 80ch;*/
+/*    padding: 1rem;*/
+/*    line-height: 1.5;*/
+/*    font-family: "Source Sans 3", sans-serif;*/
+/*}*/
 
-a {
-    color: inherit;
-    text-decoration: underline;
-    text-decoration-thickness: calc(1em / 12);
-    text-decoration-color: #F3AF61;
-    text-underline-offset: calc(1em / 6);
-}
+/** {*/
+/*    box-sizing: border-box;*/
+/*}*/
 
-a:hover {
-    text-decoration-style: wavy;
-    text-decoration-thickness: calc(calc(1em / 12) + 1px);
-}
+/*a {*/
+/*    color: inherit;*/
+/*    text-decoration: underline;*/
+/*    text-decoration-thickness: calc(1em / 12);*/
+/*    text-decoration-color: #F3AF61;*/
+/*    text-underline-offset: calc(1em / 6);*/
+/*}*/
 
-h1 {
-    margin: 1rem 0;
-    font-size: 2.5rem;
-}
+/*a:hover {*/
+/*    text-decoration-style: wavy;*/
+/*    text-decoration-thickness: calc(calc(1em / 12) + 1px);*/
+/*}*/
 
-.title {
-    font-family: "Instrument Serif", serif;
-}
+/*h1 {*/
+/*    margin: 1rem 0;*/
+/*    font-size: 2.5rem;*/
+/*}*/
 
-.header {
-    display: flex;
-    filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.2))
-    drop-shadow(0 4px 6px rgb(0 0 0 / 0.1));
-}
+/*.title {*/
+/*    font-family: serif;*/
+/*}*/
 
-.main-block {
-    line-height: 1.6;
-    margin-top: 20px;
-    padding: 0 24px;
-    padding-bottom: 20px;
-    border-width: 1px;
-    border-color: #F3AF61;
-    border-style: solid;
-    border-radius: 6px;
-    background-color: white;
-}
+/*.header {*/
+/*    display: flex;*/
+/*    filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.2))*/
+/*    drop-shadow(0 4px 6px rgb(0 0 0 / 0.1));*/
+/*}*/
+
+/*.main-block {*/
+/*    line-height: 1.6;*/
+/*    margin-top: 20px;*/
+/*    padding: 0 24px;*/
+/*    padding-bottom: 20px;*/
+/*    border-width: 1px;*/
+/*    border-color: #F3AF61;*/
+/*    border-style: solid;*/
+/*    border-radius: 6px;*/
+/*    background-color: white;*/
+/*}*/

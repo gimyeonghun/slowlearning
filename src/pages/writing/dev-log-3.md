@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Dev Log &#35;3
 published_date: 2023-01-08T06:50:46.412493+00:00
 ---

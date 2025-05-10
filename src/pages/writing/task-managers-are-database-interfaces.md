@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Inner Sanctum of the Mind
 published_date: task-managers-are-database-interfaces
 ---

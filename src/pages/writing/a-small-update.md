@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: A Small Update
 published_date: 2024-02-29T12:47:30.686045+00:00
 ---

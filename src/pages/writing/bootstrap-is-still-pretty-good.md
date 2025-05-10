@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Bootstrap is still pretty good
 published_date: 2023-05-22T08:03:11.349645+00:00
 ---
