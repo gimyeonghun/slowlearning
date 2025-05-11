@@ -1,23 +1,26 @@
 ---
 const navigation_links = [
     {"label": "Home", "href": ""},
-    {"label": "About", "href": "about"},
-    {"label": "Blog", "href": "blog"}
+    {"label": "Blog", "href": "blog"},
+    {"label": "Projects", "href": "projects"},
+    {"label": "TIL", "href": "til"},
 ];
 
 const { pathname } = Astro.url;
 ---
-<header class="flex justify-center gap-10 items-center py-8 bg-brown-200">
-    <a href="/" class="flex justify-center gap-2 items-center">
-        <!--<img style="height: 50%" src="/assets/sloth_1f9a5.png" />-->
-        <h1 class="text-xl font-serif font-semibold text-brown-50">Slow Learner's Quest</h1>
+<header class="flex justify-start gap-10 items-center pt-8 pb-4 bg-brown-50 px-4">
+    <a href="/" class="flex justify-center gap-4 items-center drop-shadow-lg">
+        <img src="/favicon-32x32.png" />
+        <div class="px-4 py-2 rounded-md bg-brown-200">
+            <h1 class="text-xl font-serif font-semibold text-brown-50">Slow Learner's Quest</h1>
+        </div>
     </a>
 </header>
-<nav class="px-2 py-4 text-lg bg-linear-to-t from-gray-300 to-slate-100">
-    <ul class="flex justify-start gap-1 flex-nowrap">
+<nav class="px-4 py-4 overflow-x-auto mb-4">
+    <ul class="flex justify-start gap-2">
         { navigation_links.map((link) => (
                 <li>
-                    <a href={`/${link.href}`} aria-selected={pathname.slice(1) === link.href ? 'true' : 'false'} class="rounded-full py-2 px-4 hover:bg-gray-300 aria-selected:text-white aria-selected:inset-shadow-sm aria-selected:bg-linear-to-t from-gray-500/40 to-slate-400/50 ">{link.label}</a>
+                    <a href={`/${link.href}`} aria-selected={pathname.slice(1) === link.href ? 'true' : 'false'} class="font-ui font-semibold rounded-full py-2 px-4 hover:bg-brown-200/40 aria-selected:text-white aria-selected:inset-shadow-sm aria-selected:bg-linear-to-t from-brown-200/90 to-brown-200 ">{link.label}</a>
                 </li>
         ))}
     </ul>

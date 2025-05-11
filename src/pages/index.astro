@@ -1,11 +1,37 @@
 ---
+import sanitizeHtml from "sanitize-html";
 import Base from "../layouts/base.astro";
 import Container from "../components/Container.astro";
+
+let posts = Object.values(
+    import.meta.glob("../pages/writing/*.md", { eager: true }),
+);
+posts.sort((a, b) =>
+    Date.parse(b.frontmatter.published_date) -
+    Date.parse(a.frontmatter.published_date));
+
+posts = posts.slice(0, 4);
 ---
 <Base>
     <Container>
-        <p>The name of this blog is inspired by the book <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow">Thinking, Fast and Slow</a>. It specifically refers to the latter system of thinking, System 2, which is more deliberate but slower.</p>
-        <p>My current two muses are healthcare (specifically dentistry) and SwiftUI - a declarative user interface framework for developing apps on all Apple devices. I also enjoy art, fashion and mindfulness.</p>
-        <p>You can explore my musings here. Otherwise you can subscribe for updates via email or RSS feed.
+        <div class="not-prose space-y-4">
+            <p>Australian certified dentist who loves art, programming and startups.</p>
+            <p>This blog is inspired by the book, <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow" class="underline">Thinking, Fast and Slow</a>. It specifically refers to the latter system of thinking, <em>System 2</em>, which is more deliberate but slower.</p>
+            <h2 class="font-serif font-3xl font-bold">Recent Posts</h2>
+            <ul>
+                {
+                    posts.map((post) => (
+                            <li>
+                                <a href={post.url} class="flex justify-start items-center">
+                                    {sanitizeHtml(post.frontmatter.title)}
+                                </a>
+                            </li>
+                    ))
+                }
+            </ul>
+            <h2 class="font-serif font-2xl font-bold py-2">Let's be Friends!</h2>
+            <p>I'm on <a href="#" class="underline">Mastodon</a> and <a href="#" class="underline">Bluesky</a>.</p>
+            <p>You can subscribe the <a href="#" class="underline">RSS feed</a> if you want to follow blog updates.</p>
+        </div>
     </Container>
 </Base>

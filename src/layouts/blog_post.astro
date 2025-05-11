@@ -1,11 +1,24 @@
 ---
 import Base from "./base.astro";
 import Container from "../components/Container.astro";
+import sanitizeHtml from "sanitize-html";
+
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 const { frontmatter } = Astro.props;
+const published_date = dayjs(frontmatter.published_date)
+    .utc()
+    .format("DD MMMM YYYY");
 ---
 <Base>
     <Container>
-        <h1 class="text-2xl font-serif">{frontmatter.title}</h1>
+        <div class="flex flex-row justify-between items-center pb-4 not-prose text-md">
+            <a href="/blog">&#8592; Back to Blog</a>
+            <span>{published_date}</span>
+        </div>
+        <h1 class="text-2xl font-serif">{sanitizeHtml(frontmatter.title)}</h1>
         <slot />
     </Container>
 </Base>

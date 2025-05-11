@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/blog_post.astro
 title: Sorting an Astro Glob
 published_date: 2025-05-05
 reference_url: https://caseyjamesperno.com/blog/sort-astro-glob/

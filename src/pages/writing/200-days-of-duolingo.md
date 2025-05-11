@@ -1,11 +1,10 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: 200 days of Duolingo
-published_date:
+published_date: 2024-08-14
 ---
 
-
-As promised in the [100 days update](https://slowlearner.quest/100-days-of-duolingo/), I am here to celebrate my 200th day streak.
+As promised in the [100 days update](/writing/100-days-of-duolingo/), I am here to celebrate my 200th day streak.
 
 This milestone reflects a change in my Dutch learning journey. I had the opportunity to meet someone who was Dutch, and they discouraged me from continuing to learn. They explained that the Netherlands is too boring and small of a country - arguing that Melbourne is a more exciting city than Amsterdam.. They also said that Dutch has too many quirks and idiosyncrasies, which may deter foreigners. As a result, I decided against studying the language too intensely, and rather focus on my other career pathways. Nevertheless, I was determined to complete a full year streak before moving on from the app.
 

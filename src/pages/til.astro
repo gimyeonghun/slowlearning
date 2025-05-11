@@ -1,0 +1,29 @@
+---
+import sanitizeHtml from "sanitize-html";
+import Base from "../layouts/base.astro";
+import Container from "../components/Container.astro";
+
+const posts = Object.values(
+    import.meta.glob("../pages/til/*.md", { eager: true }),
+);
+posts.sort(
+    (a, b) =>
+        Date.parse(b.frontmatter.published_date) -
+        Date.parse(a.frontmatter.published_date),
+);
+---
+<Base>
+    <Container>
+        <ul class="not-prose">
+            {
+                posts.map((post) => (
+                        <li>
+                            <a href={post.url} class="flex justify-start items-center">
+                                {sanitizeHtml(post.frontmatter.title)}
+                            </a>
+                        </li>
+                ))
+            }
+        </ul>
+    </Container>
+</Base>
