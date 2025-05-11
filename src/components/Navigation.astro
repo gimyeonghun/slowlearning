@@ -20,7 +20,7 @@ const { pathname } = Astro.url;
     <ul class="flex justify-start gap-2">
         { navigation_links.map((link) => (
                 <li>
-                    <a href={`/${link.href}`} aria-selected={pathname.slice(1) === link.href ? 'true' : 'false'} class="font-ui font-semibold rounded-full py-2 px-4 hover:bg-brown-200/40 aria-selected:text-white aria-selected:inset-shadow-sm aria-selected:bg-linear-to-t from-brown-200/90 to-brown-200 ">{link.label}</a>
+                    <a href={`/${link.href}`} aria-selected={pathname.slice(1) === link.href ? 'true' : link.href} class="font-ui font-semibold rounded-full py-2 px-4 hover:bg-brown-200/40 aria-selected:text-white aria-selected:inset-shadow-sm aria-selected:bg-linear-to-t from-brown-200/90 to-brown-200 ">{link.label}</a>
                 </li>
         ))}
     </ul>
