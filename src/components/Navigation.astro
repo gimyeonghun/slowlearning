@@ -8,7 +8,7 @@ const navigation_links = [
 
 const { pathname } = Astro.url;
 ---
-<header class="flex justify-start gap-10 items-center pt-8 pb-4 bg-brown-50 px-4">
+<header class="pt-8 pb-4 px-4">
     <a href="/" class="flex justify-center gap-4 items-center drop-shadow-lg">
         <img src="/favicon-32x32.png" />
         <div class="px-4 py-2 rounded-md bg-brown-200">
@@ -16,7 +16,7 @@ const { pathname } = Astro.url;
         </div>
     </a>
 </header>
-<nav class="px-4 py-4 overflow-x-auto mb-4">
+<nav class="px-4 py-4 overflow-x-auto mb-4 lg:mb-0">
     <ul class="flex justify-start gap-2">
         { navigation_links.map((link) => (
                 <li>

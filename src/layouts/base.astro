@@ -15,11 +15,13 @@ const { title } = Astro.props
     <link rel="icon" sizes="32x32" href="/favicon-32x32.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Brian Kim's humble site of learnings" />
     <title>{title} / Slow Learner's Quest</title>
+    <link rel="alternate" type="application/rss+xml" title="Slow Learner's Quest" href={new URL("rss.xml", Astro.site)} />
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen items-center justify-center">
 <Navigation />
-<main class="flex-grow">
+<main class="flex-grow lg:w-xl">
 <slot />
 </main>
 <Footer />
