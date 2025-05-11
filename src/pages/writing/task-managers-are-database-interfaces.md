@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
-title: Inner Sanctum of the Mind
-published_date: task-managers-are-database-interfaces
+title: Task Managers are database interfaces
+published_date: 2023-06-15
 ---
 
 If you really think about it, to-dos can be laid out as database rows.

@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/blog_post.astro
+layout: ../../layouts/til_post.astro
 title: Highlight Nav Link for Current Page in Astro
 published_date: 2025-05-11
 reference_url: https://www.cyishere.dev/blog/astro-active-nav-item

@@ -2,6 +2,7 @@
 import sanitizeHtml from "sanitize-html";
 import Base from "../layouts/base.astro";
 import Container from "../components/Container.astro";
+import BlogRow from "../components/BlogRow.astro";
 
 const posts = Object.values(
     import.meta.glob("../pages/til/*.md", { eager: true }),
@@ -12,18 +13,14 @@ posts.sort(
         Date.parse(a.frontmatter.published_date),
 );
 ---
-<Base>
+<Base title="Today I Learned">
     <Container>
-        <ul class="not-prose">
+        <div class="not-prose">
             {
                 posts.map((post) => (
-                        <li>
-                            <a href={post.url} class="flex justify-start items-center">
-                                {sanitizeHtml(post.frontmatter.title)}
-                            </a>
-                        </li>
+                        <BlogRow post={post} />
                 ))
             }
-        </ul>
+        </div>
     </Container>
 </Base>

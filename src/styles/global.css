@@ -25,10 +25,19 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "IBMPlexMono";
+    src: url("/fonts/IBMPlexMono-Regular.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+}
+
 @theme {
     --font-sans: "Source Sans 3", sans-serif;
     --font-serif: "Lora", serif;
     --font-ui: "AtkinsonHyperlegible-Next", sans-serif;
+    --font-family-monospace: "IBMPlexMono", monospace;
     --color-brown-50: #F8F5F2;
     --color-brown-100: #FFFFFF;
     --color-brown-200: #594F4B;

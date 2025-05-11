@@ -2,6 +2,7 @@
 import sanitizeHtml from "sanitize-html";
 import Base from "../layouts/base.astro";
 import Container from "../components/Container.astro";
+import BlogRow from "../components/BlogRow.astro";
 
 let posts = Object.values(
     import.meta.glob("../pages/writing/*.md", { eager: true }),
@@ -12,23 +13,19 @@ posts.sort((a, b) =>
 
 posts = posts.slice(0, 4);
 ---
-<Base>
+<Base title="Home">
     <Container>
         <div class="not-prose space-y-4">
             <p>Australian certified dentist who loves art, programming and startups.</p>
             <p>This blog is inspired by the book, <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow" class="underline">Thinking, Fast and Slow</a>. It specifically refers to the latter system of thinking, <em>System 2</em>, which is more deliberate but slower.</p>
             <h2 class="font-serif font-3xl font-bold">Recent Posts</h2>
-            <ul>
+            <div class="not-prose">
                 {
                     posts.map((post) => (
-                            <li>
-                                <a href={post.url} class="flex justify-start items-center">
-                                    {sanitizeHtml(post.frontmatter.title)}
-                                </a>
-                            </li>
+                            <BlogRow post={post} />
                     ))
                 }
-            </ul>
+            </div>
             <h2 class="font-serif font-2xl font-bold py-2">Let's be Friends!</h2>
             <p>I'm on <a href="#" class="underline">Mastodon</a> and <a href="#" class="underline">Bluesky</a>.</p>
             <p>You can subscribe the <a href="#" class="underline">RSS feed</a> if you want to follow blog updates.</p>
