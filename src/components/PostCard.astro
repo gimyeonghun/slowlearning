@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { post, url } = Astro.props;
-const { title, date, type, link, author, tags } = post.data;
+const { title, date, type, link, author, tags, draft } = post.data;
+const isDev = import.meta.env.DEV;
 
 const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -24,6 +25,13 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
         <span class="text-xs px-2 py-1 rounded bg-gray-200 text-gray-700">
             {type}
         </span>
+        {
+            draft && isDev && (
+                <span class="text-xs px-2 py-1 rounded bg-yellow-200 text-yellow-800 font-medium">
+                    DRAFT
+                </span>
+            )
+        }
     </div>
 
     {

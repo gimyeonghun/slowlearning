@@ -4,24 +4,41 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
 
 export async function getStaticPaths() {
-    const allPosts = await getCollection("posts");
+    const POSTS_PER_PAGE = 10;
+    const isDev = import.meta.env.DEV;
+    const allPosts = (await getCollection("posts")).filter(
+        (post) => isDev || !post.data.draft,
+    );
     const years = [
         ...new Set(allPosts.map((post) => post.data.date.getFullYear())),
     ];
 
-    return years.map((year) => {
+    return years.flatMap((year) => {
         const yearPosts = allPosts
             .filter((post) => post.data.date.getFullYear() === year)
             .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-        return {
-            params: { year: String(year) },
-            props: { posts: yearPosts, year },
-        };
+        const totalPages = Math.ceil(yearPosts.length / POSTS_PER_PAGE);
+
+        return Array.from({ length: totalPages }, (_, i) => {
+            const page = i + 1;
+            const start = (page - 1) * POSTS_PER_PAGE;
+            const end = start + POSTS_PER_PAGE;
+
+            return {
+                params: { year: String(year) },
+                props: {
+                    posts: yearPosts.slice(start, end),
+                    year,
+                    currentPage: page,
+                    totalPages,
+                },
+            };
+        });
     });
 }
 
-const { posts, year } = Astro.props;
+const { posts, year, currentPage, totalPages } = Astro.props;
 
 function getPostUrl(post: (typeof posts)[0]) {
     const date = post.data.date;
@@ -48,4 +65,47 @@ function getPostUrl(post: (typeof posts)[0]) {
             })
         }
     </div>
+
+    {
+        totalPages > 1 && (
+            <nav
+                class="flex justify-center gap-2 mt-12"
+                aria-label="Pagination"
+            >
+                {currentPage > 1 && (
+                    <a
+                        href={`/${year}?page=${currentPage - 1}`}
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                    >
+                        ← Previous
+                    </a>
+                )}
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) =>
+                        page === currentPage ? (
+                            <span class="px-4 py-2 bg-blue-600 text-white rounded">
+                                {page}
+                            </span>
+                        ) : (
+                            <a
+                                href={`/${year}?page=${page}`}
+                                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                            >
+                                {page}
+                            </a>
+                        ),
+                )}
+
+                {currentPage < totalPages && (
+                    <a
+                        href={`/${year}?page=${currentPage + 1}`}
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                    >
+                        Next →
+                    </a>
+                )}
+            </nav>
+        )
+    }
 </BaseLayout>

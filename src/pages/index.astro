@@ -3,9 +3,16 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostCard from "../components/PostCard.astro";
 
-const allPosts = (await getCollection("posts")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const POSTS_PER_PAGE = 10;
+const isDev = import.meta.env.DEV;
+
+const allPosts = (await getCollection("posts"))
+    .filter((post) => isDev || !post.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const currentPage = 1;
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const paginatedPosts = allPosts.slice(0, POSTS_PER_PAGE);
 
 function getPostUrl(post: (typeof allPosts)[0]) {
     const date = post.data.date;
@@ -20,7 +27,7 @@ function getPostUrl(post: (typeof allPosts)[0]) {
 <BaseLayout title="Home - My Blog">
     <div class="space-y-0">
         {
-            allPosts.map(async (post) => {
+            paginatedPosts.map(async (post) => {
                 const { Content } = await post.render();
                 return (
                     <PostCard post={post} url={getPostUrl(post)}>
@@ -30,4 +37,25 @@ function getPostUrl(post: (typeof allPosts)[0]) {
             })
         }
     </div>
+
+    {
+        totalPages > 1 && (
+            <nav
+                class="flex justify-center gap-2 mt-12"
+                aria-label="Pagination"
+            >
+                <span class="px-4 py-2 bg-blue-600 text-white rounded">1</span>
+                {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map(
+                    (page) => (
+                        <a
+                            href={`/page/${page}`}
+                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                        >
+                            {page}
+                        </a>
+                    ),
+                )}
+            </nav>
+        )
+    }
 </BaseLayout>

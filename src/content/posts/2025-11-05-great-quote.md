@@ -6,6 +6,7 @@ author: "Antoine de Saint-Exupéry"
 source: "https://example.com/source"
 permalink: "https://example.com/quote-permalink"
 tags: ["design", "philosophy"]
+draft: false
 ---
 
 Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.

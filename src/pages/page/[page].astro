@@ -1,0 +1,97 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+
+export async function getStaticPaths() {
+    const POSTS_PER_PAGE = 10;
+    const isDev = import.meta.env.DEV;
+    const allPosts = (await getCollection("posts"))
+        .filter((post) => isDev || !post.data.draft)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+    return Array.from({ length: totalPages - 1 }, (_, i) => {
+        const page = i + 2;
+        const start = (page - 1) * POSTS_PER_PAGE;
+        const end = start + POSTS_PER_PAGE;
+
+        return {
+            params: { page: String(page) },
+            props: {
+                posts: allPosts.slice(start, end),
+                currentPage: page,
+                totalPages,
+            },
+        };
+    });
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+
+function getPostUrl(post: (typeof posts)[0]) {
+    const date = post.data.date;
+    const year = date.getFullYear();
+    const month = date.toLocaleString("en-US", { month: "long" });
+    const day = String(date.getDate()).padStart(2, "0");
+    const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+    return `/${year}/${month}/${day}/${slug}`;
+}
+---
+
+<BaseLayout title={`Page ${currentPage} - My Blog`}>
+    <div class="space-y-0">
+        {
+            posts.map(async (post) => {
+                const { Content } = await post.render();
+                return (
+                    <PostCard post={post} url={getPostUrl(post)}>
+                        <Content />
+                    </PostCard>
+                );
+            })
+        }
+    </div>
+
+    <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
+        {
+            currentPage > 1 && (
+                <a
+                    href={currentPage === 2 ? "/" : `/page/${currentPage - 1}`}
+                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                >
+                    ← Previous
+                </a>
+            )
+        }
+
+        {
+            Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
+                page === currentPage ? (
+                    <span class="px-4 py-2 bg-blue-600 text-white rounded">
+                        {page}
+                    </span>
+                ) : (
+                    <a
+                        href={page === 1 ? "/" : `/page/${page}`}
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                    >
+                        {page}
+                    </a>
+                ),
+            )
+        }
+
+        {
+            currentPage < totalPages && (
+                <a
+                    href={`/page/${currentPage + 1}`}
+                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                >
+                    Next →
+                </a>
+            )
+        }
+    </nav>
+</BaseLayout>

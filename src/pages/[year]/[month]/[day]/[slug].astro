@@ -2,8 +2,13 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 
+const isDev = import.meta.env.DEV;
+
 export async function getStaticPaths() {
-    const posts = await getCollection("posts");
+    const isDev = import.meta.env.DEV;
+    const posts = (await getCollection("posts")).filter(
+        (post) => isDev || !post.data.draft,
+    );
 
     return posts.map((post) => {
         const date = post.data.date;
@@ -21,7 +26,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
-const { title, date, type, link, author, source, tags } = post.data;
+const { title, date, type, link, author, source, tags, draft } = post.data;
 
 const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -40,6 +45,13 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
                 >
                     {type}
                 </span>
+                {
+                    draft && isDev && (
+                        <span class="px-2 py-1 rounded bg-yellow-200 text-yellow-800 text-xs font-medium">
+                            DRAFT
+                        </span>
+                    )
+                }
             </div>
 
             {

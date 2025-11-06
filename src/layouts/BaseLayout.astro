@@ -5,6 +5,7 @@ interface Props {
 }
 
 const { title, description = "My Blog" } = Astro.props;
+const isDev = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -13,10 +14,23 @@ const { title, description = "My Blog" } = Astro.props;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="My Blog RSS Feed"
+            href="/rss.xml"
+        />
         <title>{title}</title>
         {description && <meta name="description" content={description} />}
     </head>
     <body class="bg-gray-50 text-gray-900">
+        {
+            isDev && (
+                <div class="bg-yellow-100 border-b-2 border-yellow-400 text-yellow-900 px-4 py-2 text-center text-sm font-medium">
+                    🚧 Development Mode - Draft posts visible
+                </div>
+            )
+        }
         <div class="max-w-3xl mx-auto px-4 py-8">
             <header class="mb-12">
                 <h1 class="text-3xl font-bold mb-2">
@@ -24,7 +38,18 @@ const { title, description = "My Blog" } = Astro.props;
                 </h1>
                 <nav class="text-sm text-gray-600">
                     <a href="/" class="hover:text-blue-600 mr-4">Home</a>
-                    <a href="/tags" class="hover:text-blue-600">Tags</a>
+                    <a href="/tags" class="hover:text-blue-600 mr-4">Tags</a>
+                    {
+                        isDev && (
+                            <a
+                                href="/drafts"
+                                class="hover:text-blue-600 mr-4 text-yellow-700 font-medium"
+                            >
+                                Drafts
+                            </a>
+                        )
+                    }
+                    <a href="/rss.xml" class="hover:text-blue-600">RSS</a>
                 </nav>
             </header>
             <main>

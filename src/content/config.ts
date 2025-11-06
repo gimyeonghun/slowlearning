@@ -7,6 +7,7 @@ const postsCollection = defineCollection({
     date: z.date(),
     type: z.enum(["post", "link", "quote"]),
     tags: z.array(z.string()).optional(),
+    draft: z.boolean().optional().default(false),
     // For link posts
     link: z.string().url().optional(),
     // For quote posts
