@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    post: CollectionEntry<"posts">;
+    url: string;
+}
+
+const { post, url } = Astro.props;
+const { title, date, type, link, author, tags } = post.data;
+
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+}).format(date);
+---
+
+<article class="mb-8 pb-8 border-b border-gray-200 last:border-0">
+    <div class="flex items-baseline gap-2 mb-2">
+        <time class="text-sm text-gray-500" datetime={date.toISOString()}>
+            {formattedDate}
+        </time>
+        <span class="text-xs px-2 py-1 rounded bg-gray-200 text-gray-700">
+            {type}
+        </span>
+    </div>
+
+    {
+        type === "link" ? (
+            <h2 class="text-xl font-semibold mb-2">
+                <a
+                    href={link}
+                    class="text-blue-600 hover:text-blue-800"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    {title} →
+                </a>
+            </h2>
+        ) : type === "quote" ? (
+            <h2 class="text-xl font-semibold mb-2">
+                <a href={url} class="hover:text-blue-600">
+                    {title}
+                </a>
+            </h2>
+        ) : (
+            <h2 class="text-xl font-semibold mb-2">
+                <a href={url} class="hover:text-blue-600">
+                    {title}
+                </a>
+            </h2>
+        )
+    }
+
+    {
+        type === "quote" && author && (
+            <p class="text-sm text-gray-600 mb-2">— {author}</p>
+        )
+    }
+
+    <div class="text-gray-700 prose prose-sm max-w-none mb-3">
+        <slot />
+    </div>
+
+    {
+        tags && tags.length > 0 && (
+            <div class="flex gap-2 flex-wrap">
+                {tags.map((tag) => (
+                    <a
+                        href={`/tags/${tag}`}
+                        class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 hover:bg-blue-200"
+                    >
+                        #{tag}
+                    </a>
+                ))}
+            </div>
+        )
+    }
+</article>

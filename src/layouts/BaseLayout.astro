@@ -1,0 +1,40 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = "My Blog" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+        {description && <meta name="description" content={description} />}
+    </head>
+    <body class="bg-gray-50 text-gray-900">
+        <div class="max-w-3xl mx-auto px-4 py-8">
+            <header class="mb-12">
+                <h1 class="text-3xl font-bold mb-2">
+                    <a href="/" class="hover:text-blue-600">My Blog</a>
+                </h1>
+                <nav class="text-sm text-gray-600">
+                    <a href="/" class="hover:text-blue-600 mr-4">Home</a>
+                    <a href="/tags" class="hover:text-blue-600">Tags</a>
+                </nav>
+            </header>
+            <main>
+                <slot />
+            </main>
+            <footer
+                class="mt-16 pt-8 border-t border-gray-200 text-sm text-gray-600"
+            >
+                <p>&copy; {new Date().getFullYear()} My Blog</p>
+            </footer>
+        </div>
+    </body>
+</html>

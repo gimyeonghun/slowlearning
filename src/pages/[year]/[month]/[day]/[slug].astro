@@ -1,0 +1,103 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("posts");
+
+    return posts.map((post) => {
+        const date = post.data.date;
+        const year = date.getFullYear();
+        const month = date.toLocaleString("en-US", { month: "long" });
+        const day = String(date.getDate()).padStart(2, "0");
+        const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+
+        return {
+            params: { year: String(year), month, day, slug },
+            props: { post },
+        };
+    });
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, date, type, link, author, source, tags } = post.data;
+
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+}).format(date);
+---
+
+<BaseLayout title={title}>
+    <article class="prose prose-lg max-w-none">
+        <header class="mb-8">
+            <div class="flex items-center gap-2 mb-2 text-sm text-gray-500">
+                <time datetime={date.toISOString()}>{formattedDate}</time>
+                <span
+                    class="px-2 py-1 rounded bg-gray-200 text-gray-700 text-xs"
+                >
+                    {type}
+                </span>
+            </div>
+
+            {
+                type === "link" ? (
+                    <h1 class="text-4xl font-bold mb-2">
+                        <a
+                            href={link}
+                            class="text-blue-600 hover:text-blue-800"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            {title} →
+                        </a>
+                    </h1>
+                ) : (
+                    <h1 class="text-4xl font-bold mb-2">{title}</h1>
+                )
+            }
+
+            {
+                type === "quote" && author && (
+                    <p class="text-lg text-gray-600">— {author}</p>
+                )
+            }
+
+            {
+                type === "quote" && source && (
+                    <p class="text-sm">
+                        <a
+                            href={source}
+                            class="text-blue-600 hover:text-blue-800"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Source
+                        </a>
+                    </p>
+                )
+            }
+        </header>
+
+        <div class="mb-8">
+            <Content />
+        </div>
+
+        {
+            tags && tags.length > 0 && (
+                <footer class="flex gap-2 flex-wrap not-prose">
+                    {tags.map((tag) => (
+                        <a
+                            href={`/tags/${tag}`}
+                            class="text-sm px-3 py-1 rounded bg-blue-100 text-blue-700 hover:bg-blue-200"
+                        >
+                            #{tag}
+                        </a>
+                    ))}
+                </footer>
+            )
+        }
+    </article>
+</BaseLayout>

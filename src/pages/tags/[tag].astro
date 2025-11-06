@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection("posts");
+    const uniqueTags = [
+        ...new Set(allPosts.flatMap((post) => post.data.tags || [])),
+    ];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts
+            .filter((post) => post.data.tags?.includes(tag))
+            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+function getPostUrl(post: (typeof posts)[0]) {
+    const date = post.data.date;
+    const year = date.getFullYear();
+    const month = date.toLocaleString("en-US", { month: "long" });
+    const day = String(date.getDate()).padStart(2, "0");
+    const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+    return `/${year}/${month}/${day}/${slug}`;
+}
+---
+
+<BaseLayout title={`Posts tagged "${tag}"`}>
+    <h1 class="text-3xl font-bold mb-8">Posts tagged "{tag}"</h1>
+
+    <div class="space-y-0">
+        {
+            posts.map(async (post) => {
+                const { Content } = await post.render();
+                return (
+                    <PostCard post={post} url={getPostUrl(post)}>
+                        <Content />
+                    </PostCard>
+                );
+            })
+        }
+    </div>
+</BaseLayout>
