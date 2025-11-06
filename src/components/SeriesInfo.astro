@@ -1,0 +1,83 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+interface Props {
+    seriesId: string;
+    currentPostSlug?: string;
+}
+
+const { seriesId, currentPostSlug } = Astro.props;
+const isDev = import.meta.env.DEV;
+
+// Get series info
+const allSeries = await getCollection("series");
+const series = allSeries.find((s) => s.id === seriesId);
+
+if (!series) {
+    return null;
+}
+
+// Get all posts in this series
+const allPosts = (await getCollection("posts"))
+    .filter((post) => isDev || !post.data.draft)
+    .filter((post) => post.data.series === seriesId)
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+function getPostUrl(post: CollectionEntry<"posts">) {
+    const date = post.data.date;
+    const year = date.getFullYear();
+    const month = date.toLocaleString("en-US", { month: "long" });
+    const day = String(date.getDate()).padStart(2, "0");
+    const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+    return `/${year}/${month}/${day}/${slug}`;
+}
+---
+
+<aside class="my-8 p-6 bg-purple-50 border-2 border-purple-200 rounded-lg">
+    <div class="flex items-start gap-3 mb-4">
+        <span class="text-2xl">📚</span>
+        <div>
+            <h3 class="text-lg font-bold text-purple-900 mb-1">
+                <a href={`/series/${seriesId}`} class="hover:text-purple-700">
+                    {series.data.title}
+                </a>
+            </h3>
+            <p class="text-sm text-purple-800">{series.data.description}</p>
+        </div>
+    </div>
+
+    <!-- {allPosts.length > 1 && (
+    <div>
+      <h4 class="text-sm font-semibold text-purple-900 mb-2">
+        Posts in this series ({allPosts.length}):
+      </h4>
+      <ol class="space-y-1 text-sm">
+        {allPosts.map((post, index) => {
+          const postUrl = getPostUrl(post);
+          const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+          const isCurrent = currentPostSlug && slug === currentPostSlug;
+
+          return (
+            <li class="flex items-start gap-2">
+              <span class="text-purple-600 font-medium min-w-[1.5rem]">
+                {index + 1}.
+              </span>
+              {isCurrent ? (
+                <span class="font-semibold text-purple-900">
+                  {post.data.title} (current)
+                </span>
+              ) : (
+                <a
+                  href={postUrl}
+                  class="text-purple-700 hover:text-purple-900 hover:underline"
+                >
+                  {post.data.title}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  )} -->
+</aside>

@@ -1,11 +1,13 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import SeriesInfo from "../../../../components/SeriesInfo.astro";
 
 const isDev = import.meta.env.DEV;
 
 export async function getStaticPaths() {
     const isDev = import.meta.env.DEV;
+
     const posts = (await getCollection("posts")).filter(
         (post) => isDev || !post.data.draft,
     );
@@ -26,19 +28,24 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
-const { title, date, type, link, author, source, tags, draft } = post.data;
+const { title, date, type, link, author, source, tags, draft, series } =
+    post.data;
 
 const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
 }).format(date);
+
+const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
 ---
 
 <BaseLayout title={title}>
     <article class="prose prose-lg max-w-none">
         <header class="mb-8">
-            <div class="flex items-center gap-2 mb-2 text-sm text-gray-500">
+            <div
+                class="flex items-center gap-2 mb-2 text-sm text-gray-500 flex-wrap"
+            >
                 <time datetime={date.toISOString()}>{formattedDate}</time>
                 <span
                     class="px-2 py-1 rounded bg-gray-200 text-gray-700 text-xs"
@@ -50,6 +57,16 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
                         <span class="px-2 py-1 rounded bg-yellow-200 text-yellow-800 text-xs font-medium">
                             DRAFT
                         </span>
+                    )
+                }
+                {
+                    series && (
+                        <a
+                            href={`/series/${series}`}
+                            class="px-2 py-1 rounded bg-purple-100 text-purple-700 hover:bg-purple-200 text-xs no-underline"
+                        >
+                            📚 Series
+                        </a>
                     )
                 }
             </div>
@@ -92,6 +109,8 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
                 )
             }
         </header>
+
+        {series && <SeriesInfo seriesId={series} currentPostSlug={slug} />}
 
         <div class="mb-8">
             <Content />

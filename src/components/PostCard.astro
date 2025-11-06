@@ -4,10 +4,11 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
     post: CollectionEntry<"posts">;
     url: string;
+    showSeriesLink?: boolean;
 }
 
-const { post, url } = Astro.props;
-const { title, date, type, link, author, tags, draft } = post.data;
+const { post, url, showSeriesLink = true } = Astro.props;
+const { title, date, type, link, author, tags, draft, series } = post.data;
 const isDev = import.meta.env.DEV;
 
 const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -18,7 +19,7 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
 ---
 
 <article class="mb-8 pb-8 border-b border-gray-200 last:border-0">
-    <div class="flex items-baseline gap-2 mb-2">
+    <div class="flex items-baseline gap-2 mb-2 flex-wrap">
         <time class="text-sm text-gray-500" datetime={date.toISOString()}>
             {formattedDate}
         </time>
@@ -30,6 +31,16 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
                 <span class="text-xs px-2 py-1 rounded bg-yellow-200 text-yellow-800 font-medium">
                     DRAFT
                 </span>
+            )
+        }
+        {
+            series && showSeriesLink && (
+                <a
+                    href={`/series/${series}`}
+                    class="text-xs px-2 py-1 rounded bg-purple-100 text-purple-700 hover:bg-purple-200"
+                >
+                    📚 Series
+                </a>
             )
         }
     </div>

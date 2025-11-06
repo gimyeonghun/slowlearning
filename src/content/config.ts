@@ -8,6 +8,7 @@ const postsCollection = defineCollection({
     type: z.enum(["post", "link", "quote"]),
     tags: z.array(z.string()).optional(),
     draft: z.boolean().optional().default(false),
+    series: z.string().optional(),
     // For link posts
     link: z.string().url().optional(),
     // For quote posts
@@ -17,6 +18,15 @@ const postsCollection = defineCollection({
   }),
 });
 
+const seriesCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
 export const collections = {
   posts: postsCollection,
+  series: seriesCollection,
 };
