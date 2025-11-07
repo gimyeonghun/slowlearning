@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const allSeries = await getCollection("series");
+---
+
+<BaseLayout title={"Series"}>
+    <h1 class="text-3xl font-bold mb-8">Series</h1>
+
+    <div class="space-y-0">
+        {
+            allSeries.map(async (series) => {
+                const { Content } = await series.render();
+                return (
+                <a href=`/series/${series.slug}`><h2>{series.data.title}</h2></a>
+                <Content />
+                );
+            })
+        }
+    </div>
+</BaseLayout>

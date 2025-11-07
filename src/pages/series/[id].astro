@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("series");
+
+    return posts.map((post) => {
+        return {
+            params: { id: post.slug },
+            props: { post },
+        };
+    });
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title } = post.data;
+---
+
+<h1>{title}</h1>
