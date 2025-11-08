@@ -13,9 +13,10 @@ const allSeries = await getCollection("series");
             allSeries.map(async (series) => {
                 const { Content } = await series.render();
                 return (
-                <a href=`/series/${series.slug}`><h2>{series.data.title}</h2></a>
+                <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
                 <Content />
                 );
+                <!-- Render a nested list -->
             })
         }
     </div>
