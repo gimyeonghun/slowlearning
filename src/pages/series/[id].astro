@@ -1,44 +1,32 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
 
+
 export async function getStaticPaths() {
-    const POSTS_PER_PAGE = 10;
     const isDev = import.meta.env.DEV;
-    const allPosts = (await getCollection("posts")).filter(
-        (post) => isDev || !post.data.draft,
-    );
-    const uniqueTags = [
-        ...new Set(allPosts.flatMap((post) => post.data.series || [])),
-    ];
+    
+    const allSeries = await getCollection("series");
+    const allPosts = await getCollection("posts");
+    
+    return allSeries.map((series) => {
+        const seriesPosts = allPosts
+                            .filter((post) => isDev || !post.data.draft)
+                            .filter((post) => post.data.series == series.slug)
+                            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+        
 
-    return uniqueTags.flatMap((id) => {
-        const filteredPosts = allPosts
-            .filter((post) => post.data.series?.includes(id))
-            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-        const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-
-        return Array.from({ length: totalPages }, (_, i) => {
-            const page = i + 1;
-            const start = (page - 1) * POSTS_PER_PAGE;
-            const end = start + POSTS_PER_PAGE;
-
-            return {
-                params: { id },
-                props: {
-                    posts: filteredPosts.slice(start, end),
-                    id,
-                    currentPage: page,
-                    totalPages,
-                },
-            };
-        });
-    });
+        return {
+            params: {id: series.slug},
+            props: {series, seriesPosts},
+        }
+    })
 }
 
-const { id, posts, currentPage, totalPages } = Astro.props;
+const { series, seriesPosts } = Astro.props;
+const { title } = series.data;
+const { Content } = await render(series);
 
 function getPostUrl(post: (typeof posts)[0]) {
     const date = post.data.date;
@@ -50,19 +38,19 @@ function getPostUrl(post: (typeof posts)[0]) {
 }
 ---
 
-<BaseLayout title={`Posts tagged "${id}"`}>
-    <h1 class="text-3xl font-bold mb-8">Posts tagged "{id}"</h1>
-
-    <div class="space-y-0">
-        {
-            posts.map(async (post) => {
-                const { Content } = await post.render();
-                return (
-                    <PostCard post={post} url={getPostUrl(post)}>
-                        <Content />
-                    </PostCard>
-                );
-            })
-        }
+<BaseLayout title={`Series: ${title}`}>
+    <h1 class="text-3xl font-bold mb-8">{title}</h1>
+    <Content />
+    
+    <div class="space-y-0 pt-8">
+    {
+        seriesPosts.map(async (post) => {
+            const { Content } = await post.render();
+            return (
+                <PostCard post={post} url={getPostUrl(post)}>
+                    <Content />
+                </PostCard>
+            );
+        })}
     </div>
 </BaseLayout>
