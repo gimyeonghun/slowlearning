@@ -13,7 +13,7 @@ I'm recently starting a course and the admin gave the timetable in an excel spre
 
 Here's the code in its all glory:
 
-```language-applescript
+```applescript
 
 set last_cell to ""
 set start_range to ""
