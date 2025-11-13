@@ -8,6 +8,7 @@ export async function getStaticPaths() {
     const isDev = import.meta.env.DEV;
     const allPosts = (await getCollection("posts"))
         .filter((post) => isDev || !post.data.draft)
+        .filter((post) => !post.data.hide)
         .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
