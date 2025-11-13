@@ -3,33 +3,17 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
 
-export async function getStaticPaths() {
-    const POSTS_PER_PAGE = 10;
+export async function getStaticPaths({ paginate }) {
     const isDev = import.meta.env.DEV;
     const allPosts = (await getCollection("posts"))
         .filter((post) => isDev || !post.data.draft)
         .filter((post) => !post.data.hide)
         .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-    const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-
-    return Array.from({ length: totalPages - 1 }, (_, i) => {
-        const page = i + 2;
-        const start = (page - 1) * POSTS_PER_PAGE;
-        const end = start + POSTS_PER_PAGE;
-
-        return {
-            params: { page: String(page) },
-            props: {
-                posts: allPosts.slice(start, end),
-                currentPage: page,
-                totalPages,
-            },
-        };
-    });
+    return paginate(allPosts, { pageSize: 10 });
 }
 
-const { posts, currentPage, totalPages } = Astro.props;
+const { page } = Astro.props;
 
 function getPostUrl(post: (typeof posts)[0]) {
     const date = post.data.date;
@@ -41,10 +25,12 @@ function getPostUrl(post: (typeof posts)[0]) {
 }
 ---
 
-<BaseLayout title={`Page ${currentPage} - My Blog`}>
+<BaseLayout title={`Page ${page.currentPage} - My Blog`}>
+    <h1>Page {page.currentPage}</h1>
+
     <div class="space-y-0">
         {
-            posts.map(async (post) => {
+            page.data.map(async (post) => {
                 const { Content } = await post.render();
                 return (
                     <PostCard post={post} url={getPostUrl(post)}>
@@ -57,42 +43,55 @@ function getPostUrl(post: (typeof posts)[0]) {
 
     <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
         {
-            currentPage > 1 && (
+            page.url.prev ? (
                 <a
-                    href={currentPage === 2 ? "/" : `/page/${currentPage - 1}`}
+                    href={page.url.prev}
                     class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
                 >
                     ← Previous
                 </a>
+            ) : null
+        }
+
+        {
+            Array.from({ length: page.lastPage }, (_, i) => i + 1).map(
+                (pageNumber) =>
+                    pageNumber === page.currentPage ? (
+                        <span class="px-4 py-2 bg-blue-600 text-white rounded">
+                            {pageNumber}
+                        </span>
+                    ) : (
+                        <a
+                            href={
+                                pageNumber === 1 ? "/" : `/page/${pageNumber}`
+                            }
+                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                        >
+                            {pageNumber}
+                        </a>
+                    ),
             )
         }
 
         {
-            Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
-                page === currentPage ? (
-                    <span class="px-4 py-2 bg-blue-600 text-white rounded">
-                        {page}
-                    </span>
-                ) : (
-                    <a
-                        href={page === 1 ? "/" : `/page/${page}`}
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                    >
-                        {page}
-                    </a>
-                ),
-            )
-        }
-
-        {
-            currentPage < totalPages && (
+            page.url.next ? (
                 <a
-                    href={`/page/${currentPage + 1}`}
+                    href={page.url.next}
                     class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
                 >
                     Next →
                 </a>
-            )
+            ) : null
         }
     </nav>
 </BaseLayout>
+
+<!-- <BaseLayout title={`Page ${currentPage} - My Blog`}>
+
+
+    <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
+
+
+
+    </nav>
+</BaseLayout> -->
