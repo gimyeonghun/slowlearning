@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: User Sorting in Swift and Core Data
-published_date: 2023-07-06T10:23:10.133182+00:00
+published_date: 2023-07-06:10.133182+00:00
 ---
 
 User Sorting is an interesting computer science and user experience problem. On the surface, it can seem very straightforward but can get very complicated depending on your implementation.

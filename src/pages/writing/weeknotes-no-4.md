@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Weeknotes № 4
-published_date: 2023-09-10T13:11:45.755320+00:00
+published_date: 2023-09-10:45.755320+00:00
 ---
 
 It's been a long time since I wrote anything.

@@ -2,7 +2,7 @@
 layout: ../../layouts/blog_post.astro
 title: White Night
 byline: Brian Kim
-published_date: 2022-09-03T16:12:51.336947+00:00
+published_date: 2022-09-03:51.336947+00:00
 ---
 
 > When despair for the world grows in me

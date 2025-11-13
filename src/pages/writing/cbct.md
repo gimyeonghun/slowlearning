@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: CBCT
-published_date: 2023-05-23T07:28:35.653974+00:00
+published_date: 2023-05-23:35.653974+00:00
 ---
 
 Here's something that may surprise you: apart from having a special interest in Swift/SwiftUI, I spend the majority of my other time studying dentistry. In fact, I have been doing this for 3 years now! But a healthy dose of imposter syndrome meant that I never really knew what to write about. However, I think I finally found my first topic: my CBCT Observation experience.

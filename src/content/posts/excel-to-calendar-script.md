@@ -1,6 +1,6 @@
 ---
 title: "Excel to Calendar Script"
-date: 2021-03-08T13:47:26+11:00
+date: 2021-03-08
 type: post
 tags: ["scripts"]
 ---

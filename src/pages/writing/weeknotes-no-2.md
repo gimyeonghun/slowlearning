@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Weeknotes № 2
-published_date: 2023-07-30T10:06:03.485629+00:00
+published_date: 2023-07-30:03.485629+00:00
 ---
 
 I promised that I would make a regular series of this, but I've been busy coding for the past few weeks. Nonetheless, I plan to release some articles after this one.

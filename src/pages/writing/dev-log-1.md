@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Dev Log &#35;1
-published_date: 2022-12-30T12:38:52.118946+00:00
+published_date: 2022-12-30:52.118946+00:00
 ---
 
 Any app worth its salt starts off with a bunch of boxes and arrows drawn on a napkin. *XXX* is no different.

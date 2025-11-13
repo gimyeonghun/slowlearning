@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: 100 days of Duolingo
-published_date: 2024-05-07T22:34:05.468207+00:00
+published_date: 2024-05-07:05.468207+00:00
 ---
 
 A few days ago, I reached an exciting milestone. 100 days of Duolingo.

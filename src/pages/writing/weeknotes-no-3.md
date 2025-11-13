@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Weeknotes № 3
-published_date: 2023-08-06T11:17:20.136414+00:00
+published_date: 2023-08-06:20.136414+00:00
 ---
 
 This week was busy, as per usual. The app is getting closer and closer to completion, but that's something I need to remind myself everyday.

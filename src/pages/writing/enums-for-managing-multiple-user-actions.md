@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Enums for Managing Multiple User Actions
-published_date: 2023-07-30T10:10:01.582179+00:00
+published_date: 2023-07-30:01.582179+00:00
 ---
 
 This is a really interesting [article](https://azamsharp.com/2023/02/28/building-large-scale-apps-swiftui.html) for building large scale SwiftUI apps. There is some sage wisdom here.

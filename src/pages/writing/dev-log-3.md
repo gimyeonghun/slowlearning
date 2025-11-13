@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Dev Log &#35;3
-published_date: 2023-01-08T06:50:46.412493+00:00
+published_date: 2023-01-08:46.412493+00:00
 ---
 
 I took a little break from development, but the next action on the roadmap was enabling *note taking*. The app would allow users to track their book reading through sessions, which opens up a timer and a scratchpad to jot down notes and thoughts. Afterwards, the scratchpad would split into different notes based on headers that the user can later reflect on. That means that the scratchpad can be thought of as a tree - there will be multiple nodes/notes branching from different headings.

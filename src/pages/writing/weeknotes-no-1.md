@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Weeknotes № 1
-published_date: 2023-07-09T11:32:28.033758+00:00
+published_date: 2023-07-09:28.033758+00:00
 ---
 
 I'm trying to write more and utilise this blog more. This is the start of a weekly series writing about my development journey. Though I have clinics everyday, I probably won't publish those adventures due to patient privacy.

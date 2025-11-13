@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Inner Sanctum of the Mind
-published_date: 2024-08-09T15:13:00+00:00
+published_date: 2024-08-09
 ---
 
 I have an aversion to sadness.

@@ -1,6 +1,6 @@
 ---
 title: "Its Alive!"
-date:  2021-02-07T21:37:05+11:00
+date:  2021-02-07
 type: post
 tags: []
 ---

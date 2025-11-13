@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Dev Log &#35;5
-published_date: 2023-04-21T23:04:07.659181+00:00
+published_date: 2023-04-21:07.659181+00:00
 ---
 
 I failed. I've failed for a long time, but I wasn't sure how to phrase this. But here we go.

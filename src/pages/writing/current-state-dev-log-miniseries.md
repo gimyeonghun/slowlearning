@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Launching the Dev Log Miniseries
-published_date: 2022-12-29T00:00:00+00:00
+published_date: 2022-12-29
 ---
 
 This blog has been lying pretty dormant since its inception. The reason is simple: I was busy.

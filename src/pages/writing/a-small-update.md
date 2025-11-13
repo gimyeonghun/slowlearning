@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: A Small Update
-published_date: 2024-02-29T12:47:30.686045+00:00
+published_date: 2024-02-29:30.686045+00:00
 ---
 
 Today is a unique day - it only comes around every leap year. Hence I thought it was appropriate to post a little update.

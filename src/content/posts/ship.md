@@ -1,6 +1,6 @@
 ---
 title: "Ship"
-date:  2021-03-07T11:30:43+11:00
+date:  2021-03-07
 type: post
 ---
 Over the weekend, I made something fun. I shared it with some friends. But I was more proud of the fact that I was able to ship something very quickly. I haven't worked on a side project in a *long* time and I haven't shipped anything in a much longer time, so being able to end the dry streak was a personal win. Things that helped along the way were:

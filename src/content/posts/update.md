@@ -1,6 +1,6 @@
 ---
 title: "An Update"
-date:  2021-04-24T22:29:39+10:00
+date:  2021-04-24
 type: post
 ---
 I haven't written anything in a while, but that doesn't mean I've been neglecting my blog. Rather, I've been thinking a lot about what to write, which has resulted in nothing being published. How ironic, the desire to do more has resulted in doing nothing at all. 

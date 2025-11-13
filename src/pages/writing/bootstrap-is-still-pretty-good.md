@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Bootstrap is still pretty good
-published_date: 2023-05-22T08:03:11.349645+00:00
+published_date: 2023-05-22:11.349645+00:00
 ---
 
 The pace of web development changes really quickly, and so does the flavour of CSS frameworks. Though Tailwind.css is the *hottest* thing at the moment, we can all reminisce a time when Bootstrap was king.

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: Dev Log &#35;4
-published_date: 2023-01-29T12:09:50.376752+00:00
+published_date: 2023-01-29:50.376752+00:00
 ---
 
 To track books, users need to be able to add them from somewhere. I created a search feature which uses Google Book's API (but I might switch to Amazon soon!) but it only returns 10-40 results at a time. During the weekend, I finally buckled down and created a lazy loading/infinite scroll.

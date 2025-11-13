@@ -1,6 +1,6 @@
 ---
 title: "OmniFocus to Things"
-date:  2021-02-21T11:58:59+11:00
+date:  2021-02-21
 type: post
 tags: []
 ---

@@ -7,7 +7,7 @@ const POSTS_PER_PAGE = 10;
 const isDev = import.meta.env.DEV;
 
 const allPosts = (await getCollection("posts"))
-    .filter((post) => isDev || !post.data.draft)
+    .filter((post) => isDev || !post.data.draft || !post.data.hide)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const currentPage = 1;

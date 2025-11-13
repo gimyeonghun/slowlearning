@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/blog_post.astro
 title: glacial-self-62998
-published_date: 2022-09-15T07:50:33.038574+00:00
+published_date: 2022-09-15:33.038574+00:00
 ---
 
 *This was originally written in September 2021, but reuploaded. Names were redacted for privacy*
