@@ -1,49 +1,20 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@font-face {
-    font-family: "Source Sans 3";
-    src: url("/fonts/SourceSans3-Regular.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "AtkinsonHyperlegible-Next";
-    src: url("/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Lora";
-    src: url("/fonts/Lora-VariableFont_wght.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "IBMPlexMono";
-    src: url("/fonts/IBMPlexMono-Regular.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
 @theme {
-    --font-sans: "Source Sans 3", sans-serif;
-    --font-serif: "Lora", serif;
-    --font-ui: "AtkinsonHyperlegible-Next", sans-serif;
-    --font-family-monospace: "IBMPlexMono", monospace;
-    --color-brown-50: #F8F5F2;
-    --color-brown-100: #FFFFFF;
-    --color-brown-200: #594F4B;
-    --color-stone: #3A3A39;
+    --color-brown-50: #f8f5f2;
+    --color-brown-100: #ffffff;
+    --color-brown-200: #594f4b;
+    --color-stone: #3a3a39;
 }
 
+p {
+    font-size: 15px;
+}
+
+pre {
+    font-size: 15px;
+}
 /*html {*/
 /*    background-color: #FFDFA9;*/
 /*    font-family: sans-serif;*/
