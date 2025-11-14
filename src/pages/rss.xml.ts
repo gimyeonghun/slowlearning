@@ -12,9 +12,9 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: "My Blog",
+    title: "Slow Learner Quest",
     description: "A blog about things I find interesting",
-    site: context.site || "https://yourdomain.com",
+    site: context.site || "https://slowlearner.quest",
     items: sortedPosts.map((post) => {
       const date = post.data.date;
       const year = date.getFullYear();
