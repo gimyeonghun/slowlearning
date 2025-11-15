@@ -1,9 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PostCard from "../../components/PostCard.astro";
-
-import getPostUrl from "../../scripts/postUrl";
+import PostContainer from "../../components/PostContainer.astro";
 
 export async function getStaticPaths({ paginate }) {
     const isDev = import.meta.env.DEV;
@@ -21,18 +19,7 @@ const { page } = Astro.props;
 <BaseLayout title={`Page ${page.currentPage}`}>
     <h1>Page {page.currentPage}</h1>
 
-    <div class="space-y-0">
-        {
-            page.data.map(async (post) => {
-                const { Content } = await post.render();
-                return (
-                    <PostCard post={post} url={getPostUrl(post)}>
-                        <Content />
-                    </PostCard>
-                );
-            })
-        }
-    </div>
+    <PostContainer posts={page.data} />
 
     <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
         {
@@ -78,13 +65,3 @@ const { page } = Astro.props;
         }
     </nav>
 </BaseLayout>
-
-<!-- <BaseLayout title={`Page ${currentPage} - My Blog`}>
-
-
-    <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
-
-
-
-    </nav>
-</BaseLayout> -->

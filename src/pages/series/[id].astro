@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
+import PostContainer from "../../components/PostContainer.astro";
 
 import getPostUrl from "../../scripts/postUrl";
 
@@ -33,16 +34,5 @@ const { Content } = await render(series);
     <h1 class="text-3xl font-bold mb-8">{title}</h1>
     <Content />
 
-    <div class="space-y-0 pt-8">
-        {
-            seriesPosts.map(async (post) => {
-                const { Content } = await post.render();
-                return (
-                    <PostCard post={post} url={getPostUrl(post)}>
-                        <Content />
-                    </PostCard>
-                );
-            })
-        }
-    </div>
+    <PostContainer posts={seriesPosts} />
 </BaseLayout>

@@ -1,4 +1,4 @@
 ---
 title: "OpenAI"
-description: "Series of articles posted from anthropic.com"
 ---
+Series of annotated articles posted from openai.com
