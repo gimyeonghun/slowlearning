@@ -10,14 +10,14 @@ const allPosts = (await getCollection("posts")).filter(
 const uniqueTags = Array.from(new Set(allPosts.flatMap((post) => post.data.tags || [])));
 ---
 
-<BaseLayout title={`All Tags`}>
+<BaseLayout title="All Tags">
     <h1 class="text-3xl font-bold mb-8">All Tags</h1>
 
     <div class="space-y-0">
       <ol>
         {
             uniqueTags.map(async (tag) => {
-                
+
                 return (
                   <li><a href=`/tags/${tag}`>{tag}</a></li>
                 );

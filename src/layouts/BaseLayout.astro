@@ -6,8 +6,10 @@ interface Props {
     description?: string;
 }
 
-const { title, description = "Slow Learner Quest" } = Astro.props;
+const { title, description = "Slow Learner's Quest" } = Astro.props;
 const isDev = import.meta.env.DEV;
+
+let blogTitle = `${title} / ${description}`;
 ---
 
 <!doctype html>
@@ -22,7 +24,7 @@ const isDev = import.meta.env.DEV;
             title="Slow Learner Quest RSS Feed"
             href="/rss.xml"
         />
-        <title>{title}</title>
+        <title>{blogTitle}</title>
         {description && <meta name="description" content={description} />}
 
         <script async src="https://plausible.io/js/pa-Z3u6Sa3r17addqGSBqL6a.js"
