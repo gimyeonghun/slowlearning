@@ -13,16 +13,9 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: "Slow Learner Quest",
-    description: "A blog about things I find interesting",
+    description: "Brian Kim's humble site of learnings",
     site: context.site || "https://slowlearner.quest",
     items: sortedPosts.map((post) => {
-      const date = post.data.date;
-      const year = date.getFullYear();
-      const month = date.toLocaleString("en-US", { month: "long" });
-      const day = String(date.getDate()).padStart(2, "0");
-      const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
-      const link = `/${year}/${month}/${day}/${slug}`;
-
       let title = post.data.title;
       if (post.data.type === "link") {
         title = `${title} →`;
@@ -30,14 +23,19 @@ export async function GET(context: APIContext) {
         title = `${title} (Quote)`;
       }
 
+      const date = post.data.date;
+      const year = date.getFullYear();
+      const month = date.toLocaleString("en-US", { month: "long" });
+      const day = String(date.getDate()).padStart(2, "0");
+      const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+      const link = `/${year}/${month}/${day}/${slug}`;
+
       return {
-        title,
+        title: title,
         pubDate: post.data.date,
-        link,
-        description: post.body.substring(0, 200) + "...",
+        link: link,
         categories: post.data.tags || [],
       };
     }),
-    customData: `en-us`,
   });
 }
