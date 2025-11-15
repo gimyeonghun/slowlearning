@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostCard from "../components/PostCard.astro";
 
+import getPostUrl from "../scripts/postUrl";
+
 const isDev = import.meta.env.DEV;
 
 // Redirect to home if not in development
@@ -13,15 +15,6 @@ if (!isDev) {
 const draftPosts = (await getCollection("posts"))
     .filter((post) => post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-function getPostUrl(post: (typeof draftPosts)[0]) {
-    const date = post.data.date;
-    const year = date.getFullYear();
-    const month = date.toLocaleString("en-US", { month: "long" });
-    const day = String(date.getDate()).padStart(2, "0");
-    const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
-    return `/${year}/${month}/${day}/${slug}`;
-}
 ---
 
 <BaseLayout title="Draft Posts">

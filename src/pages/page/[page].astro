@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostCard from "../../components/PostCard.astro";
 
+import getPostUrl from "../../scripts/postUrl";
+
 export async function getStaticPaths({ paginate }) {
     const isDev = import.meta.env.DEV;
     const allPosts = (await getCollection("posts"))
@@ -14,15 +16,6 @@ export async function getStaticPaths({ paginate }) {
 }
 
 const { page } = Astro.props;
-
-function getPostUrl(post: (typeof posts)[0]) {
-    const date = post.data.date;
-    const year = date.getFullYear();
-    const month = date.toLocaleString("en-US", { month: "long" });
-    const day = String(date.getDate()).padStart(2, "0");
-    const slug = post.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
-    return `/${year}/${month}/${day}/${slug}`;
-}
 ---
 
 <BaseLayout title={`Page ${page.currentPage}`}>
