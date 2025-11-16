@@ -1,5 +1,12 @@
 ---
 const { totalPages, page, currentPage, rootURL } = Astro.props;
+
+function getPageNumbers(total) {
+    if (total <= 10) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    return [1, 2, 3, "...", total - 2, total - 1, total];
+}
 ---
 
 {
@@ -49,24 +56,27 @@ const { totalPages, page, currentPage, rootURL } = Astro.props;
 {
     totalPages > 1 && (
         <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (pageNumber) =>
-                    pageNumber === currentPage ? (
-                        <span class="px-4 py-2 bg-blue-600 text-white rounded">
-                            {pageNumber}
-                        </span>
-                    ) : (
-                        <a
-                            href={
-                                pageNumber === 1
-                                    ? rootURL
-                                    : `${rootURL}page/${pageNumber}`
-                            }
-                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                        >
-                            {pageNumber}
-                        </a>
-                    ),
+            {getPageNumbers(totalPages).map((pageNumber) =>
+                pageNumber === "..." ? (
+                    <span class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded">
+                        {pageNumber}
+                    </span>
+                ) : pageNumber === currentPage ? (
+                    <span class="px-4 py-2 bg-blue-600 text-white rounded">
+                        {pageNumber}
+                    </span>
+                ) : (
+                    <a
+                        href={
+                            pageNumber === 1
+                                ? rootURL
+                                : `${rootURL}page/${pageNumber}`
+                        }
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+                    >
+                        {pageNumber}
+                    </a>
+                ),
             )}
         </nav>
     )
