@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../components/PostContainer.astro";
+import Pagination from "../../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+    const isDev = import.meta.env.DEV;
+    const allPosts = (await getCollection("posts")).filter(
+        (post) => isDev || !post.data.draft,
+    );
+
+    const uniqueTags = [
+        ...new Set(allPosts.flatMap((post) => post.data.tags || [])),
+    ];
+
+    return uniqueTags.flatMap((tag) => {
+        const filteredPosts = allPosts
+            .filter((post) => post.data.tags?.includes(tag))
+            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+        return {
+            params: { tag },
+            props: {
+                tag,
+                posts: filteredPosts.slice(0, 10),
+                totalPages: Math.ceil(filteredPosts.length / 10),
+            },
+        };
+    });
+}
+
+const { tag, posts, totalPages } = Astro.props;
+---
+
+<BaseLayout title={`"${tag}" tags`}>
+    <h1 class="text-3xl font-bold mb-8">Posts tagged "{tag}"</h1>
+    <PostContainer posts={posts} />
+    <Pagination
+        totalPages={totalPages}
+        currentPage={1}
+        rootURL={`/tags/${tag}/`}
+    />
+</BaseLayout>

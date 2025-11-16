@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostContainer from "../../components/PostContainer.astro";
+import Pagination from "../../components/Pagination.astro";
 
 export async function getStaticPaths({ paginate }) {
     const isDev = import.meta.env.DEV;
@@ -21,47 +22,5 @@ const { page } = Astro.props;
 
     <PostContainer posts={page.data} />
 
-    <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
-        {
-            page.url.prev ? (
-                <a
-                    href={page.url.prev}
-                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                >
-                    ← Previous
-                </a>
-            ) : null
-        }
-
-        {
-            Array.from({ length: page.lastPage }, (_, i) => i + 1).map(
-                (pageNumber) =>
-                    pageNumber === page.currentPage ? (
-                        <span class="px-4 py-2 bg-blue-600 text-white rounded">
-                            {pageNumber}
-                        </span>
-                    ) : (
-                        <a
-                            href={
-                                pageNumber === 1 ? "/" : `/page/${pageNumber}`
-                            }
-                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                        >
-                            {pageNumber}
-                        </a>
-                    ),
-            )
-        }
-
-        {
-            page.url.next ? (
-                <a
-                    href={page.url.next}
-                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                >
-                    Next →
-                </a>
-            ) : null
-        }
-    </nav>
+    <Pagination page={page} rootURL={"/"} />
 </BaseLayout>
