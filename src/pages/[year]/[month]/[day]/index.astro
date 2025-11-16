@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import PostContainer from "../../../../components/PostContainer.astro";
+import Pagination from "../../../../components/Pagination.astro";
 
 export async function getStaticPaths() {
     const POSTS_PER_PAGE = 10;
@@ -41,11 +42,11 @@ export async function getStaticPaths() {
             return {
                 params: { year, month, day },
                 props: {
-                    posts: dayPosts.slice(start, end),
+                    posts: dayPosts.slice(0, POSTS_PER_PAGE),
                     year,
                     month,
                     day,
-                    currentPage: page,
+                    currentPage: 1,
                     totalPages,
                 },
             };
@@ -61,46 +62,9 @@ const { posts, year, month, day, currentPage, totalPages } = Astro.props;
 
     <PostContainer posts={posts} />
 
-    {
-        totalPages > 1 && (
-            <nav
-                class="flex justify-center gap-2 mt-12"
-                aria-label="Pagination"
-            >
-                {currentPage > 1 && (
-                    <a
-                        href={`/${year}/${month}/${day}?page=${currentPage - 1}`}
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                    >
-                        ← Previous
-                    </a>
-                )}
-
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) =>
-                        page === currentPage ? (
-                            <span class="px-4 py-2 bg-blue-600 text-white rounded">
-                                {page}
-                            </span>
-                        ) : (
-                            <a
-                                href={`/${year}/${month}/${day}?page=${page}`}
-                                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                            >
-                                {page}
-                            </a>
-                        ),
-                )}
-
-                {currentPage < totalPages && (
-                    <a
-                        href={`/${year}/${month}/${day}?page=${currentPage + 1}`}
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                    >
-                        Next →
-                    </a>
-                )}
-            </nav>
-        )
-    }
+    <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        rootURL={`/${year}/${month}/${day}/`}
+    />
 </BaseLayout>

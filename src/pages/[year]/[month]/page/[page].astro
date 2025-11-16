@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import PostContainer from "../../../components/PostContainer.astro";
-import Pagination from "../../../components/Pagination.astro";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../../components/PostContainer.astro";
+import Pagination from "../../../../components/Pagination.astro";
 
 export async function getStaticPaths() {
     const POSTS_PER_PAGE = 10;
@@ -39,12 +39,12 @@ export async function getStaticPaths() {
             const end = start + POSTS_PER_PAGE;
 
             return {
-                params: { year, month },
+                params: { year, month, page },
                 props: {
-                    posts: monthPosts.slice(0, 10),
+                    posts: monthPosts.slice(start, end),
                     year,
                     month,
-                    currentPage: 1,
+                    currentPage: page,
                     totalPages,
                 },
             };

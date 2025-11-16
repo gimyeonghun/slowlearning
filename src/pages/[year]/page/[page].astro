@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PostContainer from "../../components/PostContainer.astro";
-import Pagination from "../../components/Pagination.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../components/PostContainer.astro";
+import Pagination from "../../../components/Pagination.astro";
 
 export async function getStaticPaths() {
     const POSTS_PER_PAGE = 10;
@@ -27,11 +27,11 @@ export async function getStaticPaths() {
             const end = start + POSTS_PER_PAGE;
 
             return {
-                params: { year: String(year) },
+                params: { year: String(year), page },
                 props: {
-                    posts: yearPosts.slice(0, 10),
+                    posts: yearPosts.slice(start, end),
                     year,
-                    currentPage: 1,
+                    page,
                     totalPages,
                 },
             };
@@ -39,7 +39,7 @@ export async function getStaticPaths() {
     });
 }
 
-const { posts, year, currentPage, totalPages } = Astro.props;
+const { posts, year, page, totalPages } = Astro.props;
 ---
 
 <BaseLayout title={`Posts from ${year}`}>
@@ -49,7 +49,7 @@ const { posts, year, currentPage, totalPages } = Astro.props;
 
     <Pagination
         totalPages={totalPages}
-        currentPage={currentPage}
+        currentPage={page}
         rootURL={`/${year}/`}
     />
 </BaseLayout>
