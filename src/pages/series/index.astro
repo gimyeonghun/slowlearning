@@ -34,8 +34,10 @@ function filterSeriesPosts(series: CollectionEntry<"series">) {
           const posts = filterSeriesPosts(series);
 
               return (
-                <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
-                <Content />
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
+                    <Content />
+                </div>
                 <PostContainer posts={posts} />
                 )
             })

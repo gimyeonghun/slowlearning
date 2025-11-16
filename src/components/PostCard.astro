@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import getPostUrl from "../scripts/postUrl";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -11,6 +12,10 @@ const { post, url, showSeriesLink = true } = Astro.props;
 const { title, date, type, link, author, tags, draft, series } = post.data;
 const isDev = import.meta.env.DEV;
 
+const year = date.getFullYear();
+const month = date.toLocaleString("en-US", { month: "long" });
+const day = String(date.getDate()).padStart(2, "0");
+
 const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
@@ -18,10 +23,16 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
 }).format(date);
 ---
 
-<article class="mb-8 pb-8 border-b border-gray-200 last:border-0">
+<article class="mb-8 pb-2 border-b border-gray-200 last:border-0">
     <div class="flex items-baseline gap-2 mb-2 flex-wrap">
         <time class="text-sm text-gray-500" datetime={date.toISOString()}>
-            {formattedDate}
+            <a class="hover:underline" href={`/${year}/${month}`}
+                >{month.slice(0, 3)}</a
+            >
+            <a class="hover:underline" href={`/${year}/${month}/${day}`}
+                >{day}</a
+            >,
+            <a class="hover:underline" href={`/${year}/`}>{year}</a>
         </time>
         <span class="text-xs px-2 py-1 rounded bg-gray-200 text-gray-700">
             {type}
@@ -82,18 +93,22 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
         <slot />
     </div>
 
-    {
-        tags && tags.length > 0 && (
-            <div class="flex gap-2 flex-wrap">
-                {tags.map((tag) => (
+    <div class="flex items-center gap-2 flex-wrap">
+        <a
+            href={getPostUrl(post)}
+            class="text-xs text-blue-700 hover:text-blue-600">permalink</a
+        >
+        {
+            tags &&
+                tags.length > 0 &&
+                tags.map((tag) => (
                     <a
                         href={`/tags/${tag}`}
                         class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 hover:bg-blue-200"
                     >
                         #{tag}
                     </a>
-                ))}
-            </div>
-        )
-    }
+                ))
+        }
+    </div>
 </article>

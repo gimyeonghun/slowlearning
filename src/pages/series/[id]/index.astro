@@ -33,9 +33,10 @@ const { Content } = await render(series);
 ---
 
 <BaseLayout title={`Series: ${title}`}>
-    <h1 class="text-3xl font-bold mb-8">{title}</h1>
-    <Content />
-
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-4">📚 {title}</h1>
+        <Content />
+    </div>
     <PostContainer posts={seriesPosts} />
     <Pagination
         totalPages={totalPages}
