@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PostContainer from "../../components/PostContainer.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../components/PostContainer.astro";
+import Pagination from "../../../components/Pagination.astro";
 
 export async function getStaticPaths() {
     const isDev = import.meta.env.DEV;
@@ -17,12 +18,16 @@ export async function getStaticPaths() {
 
         return {
             params: { id: series.slug },
-            props: { series, seriesPosts },
+            props: {
+                series,
+                seriesPosts: seriesPosts.slice(0, 10),
+                totalPages: Math.ceil(seriesPosts.length / 10),
+            },
         };
     });
 }
 
-const { series, seriesPosts } = Astro.props;
+const { series, seriesPosts, totalPages } = Astro.props;
 const { title } = series.data;
 const { Content } = await render(series);
 ---
@@ -32,4 +37,9 @@ const { Content } = await render(series);
     <Content />
 
     <PostContainer posts={seriesPosts} />
+    <Pagination
+        totalPages={totalPages}
+        currentPage={1}
+        rootURL={`/series/${series.slug}/`}
+    />
 </BaseLayout>
