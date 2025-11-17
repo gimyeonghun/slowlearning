@@ -4,7 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import getPostUrl from "../../scripts/postUrl";
 import BaseLayout from "../../layouts/BaseLayout.astro"
-import PostContainer from "../../components/PostContainer.astro";
+import SeriesPostsContainer from "../../components/SeriesPostsContainer.astro";
 
 const allSeries = await getCollection("series");
 const allPosts = await getCollection("posts");
@@ -30,17 +30,22 @@ function filterSeriesPosts(series: CollectionEntry<"series">) {
     <div class="space-y-0">
         {
           allSeries.map(async (series) => {
-          const { Content } = await series.render();
-          const posts = filterSeriesPosts(series);
+            const { Content } = await series.render();
+            const posts = filterSeriesPosts(series);
 
-              return (
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
-                    <Content />
-                </div>
-                <PostContainer posts={posts} />
-                )
+            return (
+              <div class="mb-6">
+                  <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
+                  <Content />
+              </div>
+              <SeriesPostsContainer posts={posts} />
+              )
             })
         }
     </div>
+
+
+
+
+
 </BaseLayout>
