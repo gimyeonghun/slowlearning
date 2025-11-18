@@ -3,6 +3,6 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<article class="prose prose-neutral prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-green-700 prose-a:hover:bg-green-800 prose-a:hover:text-white max-w-none">
+<article class="prose prose-neutral prose-h1:text-xl prose-blockquote:not-italic prose-blockquote:font-normal prose-a:text-green-700 prose-a:hover:bg-green-800 prose-a:hover:text-white max-w-none">
     <Content />
 </article>
