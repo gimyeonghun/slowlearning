@@ -41,6 +41,9 @@ const { Content } = await render(series);
     <Fragment slot="main">
         <h1 class="text-3xl font-bold mb-8">{title}</h1>
         <PostContainer posts={posts} />
+  
+    </Fragment>
+    <Fragment slot="pagination">
         <Pagination
             totalPages={totalPages}
             currentPage={page}

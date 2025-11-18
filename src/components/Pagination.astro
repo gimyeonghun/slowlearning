@@ -51,52 +51,8 @@ function getPageNumbers(total: number, currentPageNumber: number) {
 ---
 
 {
-    page && (
-        <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
-            {page.url.prev ? (
-                <a
-                    href={page.url.prev}
-                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                >
-                    ← Previous
-                </a>
-            ) : null}
-
-            {Array.from({ length: page.lastPage }, (_, i) => i + 1).map(
-                (pageNumber) =>
-                    pageNumber === page.currentPage ? (
-                        <span class="px-4 py-2 bg-blue-600 text-white rounded">
-                            {pageNumber}
-                        </span>
-                    ) : (
-                        <a
-                            href={
-                                pageNumber === 1
-                                    ? rootURL
-                                    : `/page/${pageNumber}`
-                            }
-                            class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                        >
-                            {pageNumber}
-                        </a>
-                    ),
-            )}
-
-            {page.url.next ? (
-                <a
-                    href={page.url.next}
-                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-                >
-                    Next →
-                </a>
-            ) : null}
-        </nav>
-    )
-}
-
-{
     totalPages > 1 && (
-        <nav class="flex justify-center mt-12" aria-label="Pagination">
+        <nav class="flex justify-center pb-4" aria-label="Pagination">
             <div class="isolate -space-x-px shadow-xs dark:shadow-none flex items-center">
                 {
                 currentPage === 1 ? (

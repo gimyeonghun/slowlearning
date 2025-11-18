@@ -90,7 +90,7 @@ let blogTitle = `${title} / ${description}`;
             </header>
             
             <div class="mx-auto max-w-4xl flex flex-col py-8 gap-2 sm:px-4 lg:px-8">
-                <div class="flex gap-4 pb-6">
+                <div class="flex gap-4">
                     <main class="flex-1 px-4">
                         <slot name="main" />
                     </main>
@@ -98,6 +98,7 @@ let blogTitle = `${title} / ${description}`;
                         <slot name="side-bar" />
                     </aside>
                 </div>
+                
                 <slot name="pagination" />
                 <footer class="border-t border-gray-200 text-sm text-gray-600">
                     <p class="p-4 sm:px-0 text-sm md:text-base">{new Date().getFullYear()} · Slow Learner's Quest by Brian Kim</p>

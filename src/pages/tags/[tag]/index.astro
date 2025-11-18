@@ -37,6 +37,8 @@ const { tag, posts, totalPages } = Astro.props;
     <Fragment slot="main">
         <h1 class="text-3xl font-bold mb-8">Posts tagged "{tag}"</h1>
         <PostContainer posts={posts} />
+    </Fragment>
+    <Fragment slot="pagination">
         <Pagination
             totalPages={totalPages}
             currentPage={1}
