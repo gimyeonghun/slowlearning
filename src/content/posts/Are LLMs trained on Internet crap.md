@@ -1,5 +1,5 @@
 ---
-title: Are LLMs trained on Internet crap?
+title: "Are LLMs trained on Internet crap?"
 date: 2025-10-28
 type: quote
 tags: ["llm", "ai"]
