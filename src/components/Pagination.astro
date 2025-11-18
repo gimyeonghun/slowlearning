@@ -2,23 +2,51 @@
 const { totalPages, page, currentPage, rootURL } = Astro.props;
 
 function getPageNumbers(total: number, currentPageNumber: number) {
-    if (total < 7) {
+    // Always show all pages if total is small
+    if (total <= 9) {
         return Array.from({ length: total }, (_, i) => i + 1);
-    } else {
-        const pageNumbers = [1, 2, 3, total - 2, total - 1, total];
-        if (pageNumbers.includes(currentPageNumber)) {
-            return [1, 2, 3, "...", total - 2, total - 1, total];
-        }
-        return [
-            1,
-            "...",
-            currentPageNumber - 1,
-            currentPageNumber,
-            currentPageNumber + 1,
-            "...",
-            total,
-        ];
     }
+
+    const PAGES_TO_SHOW = 7; // Number of page buttons to show (excluding ellipsis)
+    const BOUNDARY_PAGES = 2; // Pages to always show at start/end
+    const SURROUNDING_PAGES = 2; // Pages to show around current page
+
+    const pages: (number | string)[] = [];
+    
+    // Calculate the range around current page
+    const startPage = Math.max(2, currentPageNumber - SURROUNDING_PAGES);
+    const endPage = Math.min(total - 1, currentPageNumber + SURROUNDING_PAGES);
+    
+    // Always show first page
+    pages.push(1);
+    
+    // Add ellipsis or pages after first page
+    if (startPage > 2) {
+        pages.push("...");
+    } else if (startPage === 2) {
+        pages.push(2);
+    }
+    
+    // Add pages around current page
+    for (let i = Math.max(startPage, 2); i <= Math.min(endPage, total - 1); i++) {
+        if (!pages.includes(i)) {
+            pages.push(i);
+        }
+    }
+    
+    // Add ellipsis or pages before last page
+    if (endPage < total - 1) {
+        pages.push("...");
+    } else if (endPage === total - 1 && !pages.includes(total - 1)) {
+        pages.push(total - 1);
+    }
+    
+    // Always show last page
+    if (!pages.includes(total)) {
+        pages.push(total);
+    }
+    
+    return pages;
 }
 ---
 
