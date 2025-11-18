@@ -17,26 +17,44 @@ const paginatedPosts = allPosts.slice(0, POSTS_PER_PAGE);
 ---
 
 <BaseLayout title="Home">
-    <PostContainer posts={paginatedPosts} />
+    <Fragment slot="main">
+        <PostContainer posts={paginatedPosts} />
 
-    {
-        totalPages > 1 && (
-            <nav
-                class="flex justify-center gap-2 mt-12"
-                aria-label="Pagination"
-            >
-                <span class="px-4 py-2 bg-blue-600 text-white rounded">1</span>
-                {Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map(
-                    (page) => (
+        {
+            totalPages > 1 && (
+                <nav
+                    class="flex justify-center gap-2 mt-12"
+                    aria-label="Pagination"
+                >
+                    <span class="px-4 py-2 bg-blue-600 text-white rounded">
+                        1
+                    </span>
+                    {Array.from(
+                        { length: totalPages - 1 },
+                        (_, i) => i + 2,
+                    ).map((page) => (
                         <a
                             href={`/page/${page}`}
                             class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
                         >
                             {page}
                         </a>
-                    ),
-                )}
-            </nav>
-        )
-    }
+                    ))}
+                </nav>
+            )
+        }
+    </Fragment>
+    <Fragment slot="side-bar">
+        <p class="prose">
+            Welcome to Brian Kim's humble site of learnings! The name of this
+            blog is inspired by the book <a
+                href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow"
+                >Thinking, Fast and Slow</a
+            >. It specifically refers to the latter system of thinking, <strong
+                >System 2</strong
+            >, which is more deliberate but slower. As a result, I take a moment
+            to post anything that I find interesting, or anything that I have
+            learnt.
+        </p>
+    </Fragment>
 </BaseLayout>

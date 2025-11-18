@@ -3,43 +3,45 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="About">
-    <h2 class="text-3xl font-bold mb-8">What is this?</h2>
-    <article class="prose">
-        <p>
-            Welcome to Brian Kim's humble site of learnings! The name of this
-            blog is inspired by the book <a
-                href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow"
-                >Thinking, Fast and Slow</a
-            >. It specifically refers to the latter system of thinking, <strong
-                >System 2</strong
-            >, which is more deliberate but slower. As a result, I take a moment
-            to post anything that I find interesting, or anything that I have
-            learnt.
-        </p>
-        <p>
-            My passions involve dentistry, machine learning/AI development and
-            art. I also enjoy psychology and mindfulness.
-        </p>
-        <p>
-            I am also working on <a href="https://anthrodontics.com"
-                >Anthrodontics</a
-            >, a LLM frontier research and commercial company for Dentists 🦷 I
-            write a
-            <a href="https://anthrodontics.substack.com" class=""
-                >monthly newsletter</a
-            >
-            about my founder journey.
-        </p>
-        <p>
-            I am a polygot programmer. My current language of choice is <a
-                href="https://elixir-lang.org">Elixir</a
-            >, but I also dabble in AppleScript, Javascript, Python, Ruby, Go
-            and Swift.
-        </p>
-        <p>
-            I lived a previous life as an iOS indie developer. My studio, <a
-                href="https://othe.red">Otherness</a
-            >, is currently on hiatus as I focus on Anthrodontics.
-        </p>
-    </article>
+    <Fragment slot="main">
+        <h2 class="text-3xl font-bold mb-8">What is this?</h2>
+        <article class="prose">
+            <p>
+                Welcome to Brian Kim's humble site of learnings! The name of
+                this blog is inspired by the book <a
+                    href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow"
+                    >Thinking, Fast and Slow</a
+                >. It specifically refers to the latter system of thinking, <strong
+                    >System 2</strong
+                >, which is more deliberate but slower. As a result, I take a
+                moment to post anything that I find interesting, or anything
+                that I have learnt.
+            </p>
+            <p>
+                My passions involve dentistry, machine learning/AI development
+                and art. I also enjoy psychology and mindfulness.
+            </p>
+            <p>
+                I am also working on <a href="https://anthrodontics.com"
+                    >Anthrodontics</a
+                >, a LLM frontier research and commercial company for Dentists
+                🦷 I write a
+                <a href="https://anthrodontics.substack.com" class=""
+                    >monthly newsletter</a
+                >
+                about my founder journey.
+            </p>
+            <p>
+                I am a polygot programmer. My current language of choice is <a
+                    href="https://elixir-lang.org">Elixir</a
+                >, but I also dabble in AppleScript, Javascript, Python, Ruby,
+                Go and Swift.
+            </p>
+            <p>
+                I lived a previous life as an iOS indie developer. My studio, <a
+                    href="https://othe.red">Otherness</a
+                >, is currently on hiatus as I focus on Anthrodontics.
+            </p>
+        </article>
+    </Fragment>
 </BaseLayout>

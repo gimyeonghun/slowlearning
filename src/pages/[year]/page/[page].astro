@@ -43,13 +43,15 @@ const { posts, year, page, totalPages } = Astro.props;
 ---
 
 <BaseLayout title={`Posts from ${year}`}>
-    <h1 class="text-3xl font-bold mb-8">Posts from {year}</h1>
+    <Fragment slot="main">
+        <h1 class="text-3xl font-bold mb-8">Posts from {year}</h1>
 
-    <PostContainer posts={posts} />
+        <PostContainer posts={posts} />
 
-    <Pagination
-        totalPages={totalPages}
-        currentPage={page}
-        rootURL={`/${year}/`}
-    />
+        <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            rootURL={`/${year}/`}
+        />
+    </Fragment>
 </BaseLayout>

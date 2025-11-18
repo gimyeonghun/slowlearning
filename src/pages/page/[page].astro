@@ -18,9 +18,11 @@ const { page } = Astro.props;
 ---
 
 <BaseLayout title={`Page ${page.currentPage}`}>
-    <h1>Page {page.currentPage}</h1>
+    <Fragment slot="main">
+        <h1>Page {page.currentPage}</h1>
 
-    <PostContainer posts={page.data} />
+        <PostContainer posts={page.data} />
 
-    <Pagination page={page} rootURL={"/"} />
+        <Pagination page={page} rootURL={"/"} />
+    </Fragment>
 </BaseLayout>

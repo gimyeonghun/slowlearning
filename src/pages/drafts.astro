@@ -16,30 +16,32 @@ const draftPosts = (await getCollection("posts"))
 ---
 
 <BaseLayout title="Draft Posts">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold mb-2">Draft Posts</h1>
-        <p class="text-gray-600">
-            These posts are only visible in development mode. Set <code
-                class="bg-gray-200 px-1 py-0.5 rounded text-sm"
-                >draft: false</code
-            > to publish.
-        </p>
-    </div>
+    <Fragment slot="main">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">Draft Posts</h1>
+            <p class="text-gray-600">
+                These posts are only visible in development mode. Set <code
+                    class="bg-gray-200 px-1 py-0.5 rounded text-sm"
+                    >draft: false</code
+                > to publish.
+            </p>
+        </div>
 
-    {
-        draftPosts.length === 0 ? (
-            <div class="text-center py-12 text-gray-500">
-                <p class="text-lg">No draft posts found.</p>
-                <p class="mt-2">
-                    Create a post with{" "}
-                    <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">
-                        draft: true
-                    </code>{" "}
-                    in the frontmatter.
-                </p>
-            </div>
-        ) : (
-            <PostContainer posts={draftPosts} />
-        )
-    }
+        {
+            draftPosts.length === 0 ? (
+                <div class="text-center py-12 text-gray-500">
+                    <p class="text-lg">No draft posts found.</p>
+                    <p class="mt-2">
+                        Create a post with{" "}
+                        <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">
+                            draft: true
+                        </code>{" "}
+                        in the frontmatter.
+                    </p>
+                </div>
+            ) : (
+                <PostContainer posts={draftPosts} />
+            )
+        }
+    </Fragment>
 </BaseLayout>

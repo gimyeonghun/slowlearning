@@ -34,11 +34,13 @@ const { tag, posts, totalPages } = Astro.props;
 ---
 
 <BaseLayout title={`"${tag}" tags`}>
-    <h1 class="text-3xl font-bold mb-8">Posts tagged "{tag}"</h1>
-    <PostContainer posts={posts} />
-    <Pagination
-        totalPages={totalPages}
-        currentPage={1}
-        rootURL={`/tags/${tag}/`}
-    />
+    <Fragment slot="main">
+        <h1 class="text-3xl font-bold mb-8">Posts tagged "{tag}"</h1>
+        <PostContainer posts={posts} />
+        <Pagination
+            totalPages={totalPages}
+            currentPage={1}
+            rootURL={`/tags/${tag}/`}
+        />
+    </Fragment>
 </BaseLayout>

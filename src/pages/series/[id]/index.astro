@@ -33,14 +33,16 @@ const { Content } = await render(series);
 ---
 
 <BaseLayout title={`Series: ${title}`}>
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold mb-4">📚 {title}</h1>
-        <Content />
-    </div>
-    <PostContainer posts={seriesPosts} />
-    <Pagination
-        totalPages={totalPages}
-        currentPage={1}
-        rootURL={`/series/${series.slug}/`}
-    />
+    <Fragment slot="main">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-4">📚 {title}</h1>
+            <Content />
+        </div>
+        <PostContainer posts={seriesPosts} />
+        <Pagination
+            totalPages={totalPages}
+            currentPage={1}
+            rootURL={`/series/${series.slug}/`}
+        />
+    </Fragment>
 </BaseLayout>
