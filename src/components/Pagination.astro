@@ -7,8 +7,6 @@ function getPageNumbers(total: number, currentPageNumber: number) {
         return Array.from({ length: total }, (_, i) => i + 1);
     }
 
-    const PAGES_TO_SHOW = 7; // Number of page buttons to show (excluding ellipsis)
-    const BOUNDARY_PAGES = 2; // Pages to always show at start/end
     const SURROUNDING_PAGES = 2; // Pages to show around current page
 
     const pages: (number | string)[] = [];
