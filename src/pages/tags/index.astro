@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+
+import Rectangle from "../../components/Rectangle.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const isDev = import.meta.env.DEV;
@@ -43,13 +45,15 @@ const getSizeClass = (count: number) => {
 <BaseLayout title="All Tags">
     <Fragment slot="main">
         <h1 class="text-3xl font-bold mb-8">All Tags</h1>
-
+        { sortedTags.length === 0 ? (
+            <Rectangle />
+        ) : (
         <div class="flex flex-wrap gap-3 justify-center items-center">
             {
                 sortedTags.map(([tag, count]) => (
                     <a
                         href={`/tags/${tag}`}
-                        class={`${getSizeClass(count)} inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-600 transition-colors duration-200 no-underline`}
+                        class={`${getSizeClass(count)} inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-green-100 text-gray-700 hover:text-green-700 transition-colors duration-200 no-underline`}
                     >
                         {tag}
                         <span class="text-xs ml-1 opacity-60">({count})</span>
@@ -57,5 +61,7 @@ const getSizeClass = (count: number) => {
                 ))
             }
         </div>
+    )
+}
     </Fragment>
 </BaseLayout>

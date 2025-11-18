@@ -1,0 +1,11 @@
+---
+const { post } = Astro.props;
+const { title, link } = post.data;
+---
+
+<div class="flex gap-1">
+  <div class="text-gray-700 prose prose-sm max-w-none mb-3">
+    <a href={link} class="text-green-700 underline hover:bg-green-800 hover:text-white inline" target="_blank" rel="noopener">{title}</a>.
+      <slot />
+  </div>
+</div>

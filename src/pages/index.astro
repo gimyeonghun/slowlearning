@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostContainer from "../components/PostContainer.astro";
 import Pagination from "../components/Pagination.astro";
+import Rectangle from "../components/Rectangle.astro";
 
 const POSTS_PER_PAGE = 10;
 const isDev = import.meta.env.DEV;
@@ -18,7 +19,13 @@ const paginatedPosts = allPosts.slice(0, POSTS_PER_PAGE);
 
 <BaseLayout title="Home">
     <Fragment slot="main">
-        <PostContainer posts={paginatedPosts} />
+        {
+            paginatedPosts.length === 0 ? (
+                <Rectangle />
+            ) : (
+                <PostContainer posts={paginatedPosts} />
+            )
+        }
     </Fragment>
     <Fragment slot="side-bar">
         <p>
