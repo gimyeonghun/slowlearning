@@ -15,3 +15,14 @@ p {
 pre {
     font-size: 15px;
 }
+
+  .prose a[href^="http"]:not([href*="slowlearner.quest"])::after,
+  .prose a[href^="https"]:not([href*="slowlearner.quest"])::after,
+  .prose a[href^="http"]:not([href*="localhost"])::after {
+    content: " ↗";
+    /* or use: content: " 🔗"; */
+    /* or use: content: " ⧉"; */
+    display: inline-block;
+    margin-left: 0.125rem;
+    font-size: 0.875em;
+  }

@@ -1,7 +1,7 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import getPostUrl from "../scripts/postUrl";
-import PostLink from "./posts/PostLink.astro";
+import PostType from "./posts/PostType.astro";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -9,65 +9,27 @@ interface Props {
     showSeriesLink?: boolean;
 }
 
-const { post, url, showSeriesLink = true } = Astro.props;
-const { title, date, type, link, author, tags, draft, series } = post.data;
+const { post, showSeriesLink = true } = Astro.props;
+const { date, type, tags, draft, series } = post.data;
 const isDev = import.meta.env.DEV;
 
 const year = date.getFullYear();
 const month = date.toLocaleString("en-US", { month: "long" });
 const day = String(date.getDate()).padStart(2, "0");
+
+async function getSeriesTitle(series) {
+    const allSeries = await getCollection('series');
+    const postSeries = allSeries.find(s => s.slug === series);
+    
+    return postSeries.data.title;
+}
+
 ---
 
-<article class="mb-8 pb-2 border-b border-gray-200 last:border-0">
-    <div class="flex items-baseline gap-2 mb-2 flex-wrap">
+<div class="py-4 border-b border-gray-200 last:border-0">
+    <PostType post={post} />
 
-
-        {
-            draft && isDev && (
-                <span class="text-xs px-2 py-1 rounded bg-yellow-200 text-yellow-800 font-medium">
-                    DRAFT
-                </span>
-            )
-        }
-        {
-            series && showSeriesLink && (
-                <a
-                    href={`/series/${series}`}
-                    class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 inset-ring inset-ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:inset-ring-purple-400/30"
-                >
-                    📚 Series
-                </a>
-            )
-        }
-    </div>
-
-{
-        type === "link" ? (
-            <PostLink post={post}>
-                <slot />
-            </PostLink>
-        ) : type === "quote" ? (
-            <h2 class="text-xl font-semibold mb-2">
-                <a href={url} class="hover:text-blue-600">
-                    {title}
-                </a>
-            </h2>
-        ) : (
-            <h2 class="text-xl font-semibold mb-2">
-                <a href={url} class="hover:text-blue-600">
-                    {title}
-                </a>
-            </h2>
-        )
-    }
-    
-    {
-        type === "quote" && author && (
-            <p class="text-sm text-gray-600 mb-2">— {author}</p>
-        )
-    }
-
-    <div class="flex items-center gap-2 flex-wrap">
+    <div class="flex items-center gap-2 flex-wrap pt-4">
         <a
             href={getPostUrl(post)}
             class="text-sm text-green-700 hover:text-white hover:bg-green-800">&para;</a
@@ -88,6 +50,27 @@ const day = String(date.getDate()).padStart(2, "0");
         </span>
         
         {
+            draft && isDev && (
+                <span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700 dark:bg-red-400/10 dark:text-red-400">
+                  <svg viewBox="0 0 6 6" aria-hidden="true" class="size-1.5 fill-red-500 dark:fill-red-400">
+                    <circle r="3" cx="3" cy="3" />
+                  </svg>
+                  Draft
+                </span>
+            )
+        }
+        {
+            series && showSeriesLink && (
+                <a
+                    href={`/series/${series}`}
+                    class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 inset-ring inset-ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:inset-ring-purple-400/30"
+                >
+                    📚 {getSeriesTitle(series)}
+                </a>
+            )
+        }
+        
+        {
             tags &&
                 tags.length > 0 &&
                 tags.map((tag) => (
@@ -100,4 +83,4 @@ const day = String(date.getDate()).padStart(2, "0");
                 ))
         }
     </div>
-</article>
+</siv>

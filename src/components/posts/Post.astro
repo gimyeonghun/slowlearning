@@ -1,0 +1,11 @@
+---
+import getPostUrl from "../../scripts/postUrl";
+
+const { post, detail } = Astro.props;
+const { Content } = await post.render();
+---
+
+<article class="prose prose-neutral prose-h1:text-xl prose-a:text-green-700 prose-a:hover:bg-green-800 prose-a:hover:text-white max-w-none">
+    { detail ? (<h1>{post.data.title}</h1>) : (<h1><a href={getPostUrl(post)}>{post.data.title}</a></h1>) }
+    <Content />
+</article>

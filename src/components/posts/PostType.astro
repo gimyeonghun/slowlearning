@@ -1,0 +1,20 @@
+---
+import PostLink from "./PostLink.astro";
+import PostQuote from "./PostQuote.astro";
+import Post from "./Post.astro";
+
+const { post, detail = false } = Astro.props;
+const { type } = post.data;
+---
+
+{
+    type === "link" ? (
+        <PostLink post={post}>
+            <slot />
+        </PostLink>
+    ) : type === "quote" ? (
+        <PostQuote post={post} />
+    ) : (
+        <Post post={post} detail={detail} />
+    )
+}
