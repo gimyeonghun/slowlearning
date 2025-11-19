@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import { getCollection } from "astro:content";
+import getPostUrl from "../../scripts/postUrl";
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import SeriesPostsContainer from "../../components/SeriesPostsContainer.astro";
+
+const allSeries = await getCollection("series");
+const allPosts = await getCollection("posts");
+
+function filterSeriesPosts(series: CollectionEntry<"series">) {
+  const isDev = import.meta.env.DEV;
+
+  const posts = allPosts
+    .filter((post) => isDev || !post.data.draft)
+    .filter((post) => post.data.series == series.slug)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 5);
+
+  console.log(posts[0]);
+
+  return posts;
+}
+---
+
+<BaseLayout title={"Series"}>
+    <Fragment slot="main">
+    <h1 class="text-3xl font-bold mb-8">Series</h1>
+
+    <div class="space-y-0">
+        {
+          allSeries.map(async (series) => {
+            const { Content } = await series.render();
+            const posts = filterSeriesPosts(series);
+
+            return (
+              <div class="mb-6">
+                  <h2 class="text-xl font-semibold mb-2"><a href=`/series/${series.slug}`>{series.data.title}</a></h2>
+                  <Content />
+              </div>
+              <SeriesPostsContainer posts={posts} />
+              )
+            })
+        }
+    </div>
+
+    </Fragment>
+
+
+
+</BaseLayout>

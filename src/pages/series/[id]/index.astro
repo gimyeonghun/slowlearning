@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../components/PostContainer.astro";
+import Pagination from "../../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+    const isDev = import.meta.env.DEV;
+
+    const allSeries = await getCollection("series");
+    const allPosts = await getCollection("posts");
+
+    return allSeries.map((series) => {
+        const seriesPosts = allPosts
+            .filter((post) => isDev || !post.data.draft)
+            .filter((post) => post.data.series == series.slug)
+            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+        return {
+            params: { id: series.slug },
+            props: {
+                series,
+                seriesPosts: seriesPosts.slice(0, 10),
+                totalPages: Math.ceil(seriesPosts.length / 10),
+            },
+        };
+    });
+}
+
+const { series, seriesPosts, totalPages } = Astro.props;
+const { title } = series.data;
+const { Content } = await render(series);
+---
+
+<BaseLayout title={`Series: ${title}`}>
+    <Fragment slot="main">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-4">📚 {title}</h1>
+            <Content />
+        </div>
+        
+        <PostContainer posts={seriesPosts} />
+    </Fragment>
+    <Fragment slot="pagination">
+        <Pagination
+            totalPages={totalPages}
+            currentPage={1}
+            rootURL={`/series/${series.slug}/`}
+        />
+    </Fragment>
+</BaseLayout>

@@ -1,104 +1,28 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@font-face {
-    font-family: "Source Sans 3";
-    src: url("/fonts/SourceSans3-Regular.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "AtkinsonHyperlegible-Next";
-    src: url("/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Lora";
-    src: url("/fonts/Lora-VariableFont_wght.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "IBMPlexMono";
-    src: url("/fonts/IBMPlexMono-Regular.ttf") format('truetype');
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-}
-
 @theme {
-    --font-sans: "Source Sans 3", sans-serif;
-    --font-serif: "Lora", serif;
-    --font-ui: "AtkinsonHyperlegible-Next", sans-serif;
-    --font-family-monospace: "IBMPlexMono", monospace;
-    --color-brown-50: #F8F5F2;
-    --color-brown-100: #FFFFFF;
-    --color-brown-200: #594F4B;
-    --color-stone: #3A3A39;
+    --color-brown-50: #f8f5f2;
+    --color-brown-100: #ffffff;
+    --color-brown-200: #594f4b;
+    --color-stone: #3a3a39;
 }
 
-/*html {*/
-/*    background-color: #FFDFA9;*/
-/*    font-family: sans-serif;*/
-/*    color: #212121;*/
-/*}*/
+p {
+    font-size: 15px;
+}
 
-/*body {*/
-/*    margin: 0 auto;*/
-/*    width: 100%;*/
-/*    max-width: 80ch;*/
-/*    padding: 1rem;*/
-/*    line-height: 1.5;*/
-/*    font-family: "Source Sans 3", sans-serif;*/
-/*}*/
+pre {
+    font-size: 15px;
+}
 
-/** {*/
-/*    box-sizing: border-box;*/
-/*}*/
-
-/*a {*/
-/*    color: inherit;*/
-/*    text-decoration: underline;*/
-/*    text-decoration-thickness: calc(1em / 12);*/
-/*    text-decoration-color: #F3AF61;*/
-/*    text-underline-offset: calc(1em / 6);*/
-/*}*/
-
-/*a:hover {*/
-/*    text-decoration-style: wavy;*/
-/*    text-decoration-thickness: calc(calc(1em / 12) + 1px);*/
-/*}*/
-
-/*h1 {*/
-/*    margin: 1rem 0;*/
-/*    font-size: 2.5rem;*/
-/*}*/
-
-/*.title {*/
-/*    font-family: serif;*/
-/*}*/
-
-/*.header {*/
-/*    display: flex;*/
-/*    filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.2))*/
-/*    drop-shadow(0 4px 6px rgb(0 0 0 / 0.1));*/
-/*}*/
-
-/*.main-block {*/
-/*    line-height: 1.6;*/
-/*    margin-top: 20px;*/
-/*    padding: 0 24px;*/
-/*    padding-bottom: 20px;*/
-/*    border-width: 1px;*/
-/*    border-color: #F3AF61;*/
-/*    border-style: solid;*/
-/*    border-radius: 6px;*/
-/*    background-color: white;*/
-/*}*/
+  .prose a[href^="http"]:not([href*="slowlearner.quest"])::after,
+  .prose a[href^="https"]:not([href*="slowlearner.quest"])::after,
+  .prose a[href^="http"]:not([href*="localhost"])::after {
+    content: " ↗";
+    /* or use: content: " 🔗"; */
+    /* or use: content: " ⧉"; */
+    display: inline-block;
+    margin-left: 0.125rem;
+    font-size: 0.875em;
+  }

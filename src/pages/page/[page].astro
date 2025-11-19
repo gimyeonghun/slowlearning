@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostContainer from "../../components/PostContainer.astro";
+import Pagination from "../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+    const POSTS_PER_PAGE = 10;
+    const isDev = import.meta.env.DEV;
+    const allPosts = (await getCollection("posts"))
+        .filter((post) => isDev || !post.data.draft)
+        .filter((post) => !post.data.hide)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+    return Array.from({ length: totalPages }, (_, i) => {
+        const page = i + 1;
+        const start = i * POSTS_PER_PAGE;
+        const end = start + POSTS_PER_PAGE;
+    
+        return {
+            params: { page },
+            props: {
+                posts: allPosts.slice(start, end),
+                page,
+                totalPages,
+            },
+        };
+    });
+}
+
+const { posts, page, totalPages } = Astro.props;
+---
+
+<BaseLayout title={`Page ${page}`}>
+    <Fragment slot="main">
+        <h1>Page {page}</h1>
+
+        <PostContainer posts={posts} />
+    </Fragment>
+    <Fragment slot="pagination">
+        <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            rootURL={"/"}
+        />
+    </Fragment>
+</BaseLayout>

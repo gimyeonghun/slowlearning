@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+
+import Rectangle from "../../components/Rectangle.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const isDev = import.meta.env.DEV;
+const allPosts = (await getCollection("posts")).filter(
+    (post) => isDev || !post.data.draft,
+);
+
+// Count posts per tag
+const tagCounts = allPosts.reduce(
+    (acc, post) => {
+        const tags = post.data.tags || [];
+        tags.forEach((tag) => {
+            acc[tag] = (acc[tag] || 0) + 1;
+        });
+        return acc;
+    },
+    {} as Record<string, number>,
+);
+
+// Sort tags alphabetically
+const sortedTags = Object.entries(tagCounts).sort(([a], [b]) =>
+    a.localeCompare(b),
+);
+
+// Calculate size classes based on frequency
+const maxCount = Math.max(...Object.values(tagCounts));
+const minCount = Math.min(...Object.values(tagCounts));
+
+const getSizeClass = (count: number) => {
+    if (maxCount === minCount) return "text-base";
+
+    const ratio = (count - minCount) / (maxCount - minCount);
+
+    if (ratio > 0.75) return "text-2xl";
+    if (ratio > 0.5) return "text-xl";
+    if (ratio > 0.25) return "text-lg";
+    return "text-base";
+};
+---
+
+<BaseLayout title="All Tags">
+    <Fragment slot="main">
+        <h1 class="text-3xl font-bold mb-8">All Tags</h1>
+        { sortedTags.length === 0 ? (
+            <Rectangle />
+        ) : (
+        <div class="flex flex-wrap gap-3 justify-center items-center">
+            {
+                sortedTags.map(([tag, count]) => (
+                    <a
+                        href={`/tags/${tag}`}
+                        class={`${getSizeClass(count)} inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-green-100 text-gray-700 hover:text-green-700 transition-colors duration-200 no-underline`}
+                    >
+                        {tag}
+                        <span class="text-xs ml-1 opacity-60">({count})</span>
+                    </a>
+                ))
+            }
+        </div>
+    )
+}
+    </Fragment>
+</BaseLayout>

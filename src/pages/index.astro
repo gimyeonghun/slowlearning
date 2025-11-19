@@ -1,34 +1,42 @@
 ---
-import sanitizeHtml from "sanitize-html";
-import Base from "../layouts/base.astro";
-import Container from "../components/Container.astro";
-import BlogRow from "../components/BlogRow.astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostContainer from "../components/PostContainer.astro";
+import Pagination from "../components/Pagination.astro";
+import Rectangle from "../components/Rectangle.astro";
 
-let posts = Object.values(
-    import.meta.glob("../pages/writing/*.md", { eager: true }),
-);
-posts.sort((a, b) =>
-    Date.parse(b.frontmatter.published_date) -
-    Date.parse(a.frontmatter.published_date));
+const POSTS_PER_PAGE = 10;
+const isDev = import.meta.env.DEV;
 
-posts = posts.slice(0, 4);
+const allPosts = (await getCollection("posts"))
+    .filter((post) => isDev || !post.data.draft)
+    .filter((post) => !post.data.hide)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const paginatedPosts = allPosts.slice(0, POSTS_PER_PAGE);
 ---
-<Base title="Home">
-    <Container>
-        <div class="not-prose space-y-4">
-            <p>Australian certified dentist who loves art, programming and startups.</p>
-            <p>This blog is inspired by the book, <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow" class="underline">Thinking, Fast and Slow</a>. It specifically refers to the latter system of thinking, <em>System 2</em>, which is more deliberate but slower.</p>
-            <h2 class="font-serif font-3xl font-bold">Recent Posts</h2>
-            <div class="not-prose">
-                {
-                    posts.map((post) => (
-                            <BlogRow post={post} />
-                    ))
-                }
-            </div>
-            <h2 class="font-serif font-2xl font-bold py-2">Let's be Friends!</h2>
-            <p>I'm on <a href="https://aus.social/@hoon" class="underline">Mastodon</a> and <a href="https://bsky.app/profile/slowlearner.quest" class="underline">Bluesky</a>.</p>
-            <p>You can subscribe the <a href="/rss.xml/" class="underline">RSS feed</a> if you want to follow blog updates.</p>
-        </div>
-    </Container>
-</Base>
+
+<BaseLayout title="Home">
+    <Fragment slot="main">
+        {
+            paginatedPosts.length === 0 ? (
+                <Rectangle />
+            ) : (
+                <PostContainer posts={paginatedPosts} />
+            )
+        }
+    </Fragment>
+    <Fragment slot="side-bar">
+        <p>
+            A learning blog by Brian Kim.
+        </p>
+    </Fragment>
+    <Fragment slot="pagination">
+        <Pagination
+                totalPages={totalPages}
+                currentPage={1}
+                rootURL={"/"}
+            />
+    </Fragment>
+</BaseLayout>

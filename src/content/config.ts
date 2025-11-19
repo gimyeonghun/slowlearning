@@ -1,0 +1,32 @@
+import { defineCollection, z } from "astro:content";
+
+const postsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    type: z.enum(["post", "link", "quote"]),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean().optional().default(false),
+    series: z.string().optional(),
+    // For link posts
+    link: z.string().url().optional(),
+    // For quote posts
+    author: z.string().optional(),
+    source: z.string().url().optional(),
+    permalink: z.string().url().optional(),
+    hide: z.boolean().optional().default(false),
+  }),
+});
+
+const seriesCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+  }),
+});
+
+export const collections = {
+  posts: postsCollection,
+  series: seriesCollection,
+};

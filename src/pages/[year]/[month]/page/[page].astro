@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PostContainer from "../../../../components/PostContainer.astro";
+import Pagination from "../../../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+    const POSTS_PER_PAGE = 10;
+    const isDev = import.meta.env.DEV;
+    const allPosts = (await getCollection("posts")).filter(
+        (post) => isDev || !post.data.draft,
+    );
+    const yearMonths = [
+        ...new Set(
+            allPosts.map((post) => {
+                const date = post.data.date;
+                return `${date.getFullYear()}-${date.toLocaleString("en-US", { month: "long" })}`;
+            }),
+        ),
+    ];
+
+    return yearMonths.flatMap((yearMonth) => {
+        const [year, month] = yearMonth.split("-");
+        const monthPosts = allPosts
+            .filter((post) => {
+                const date = post.data.date;
+                return (
+                    date.getFullYear() === parseInt(year) &&
+                    date.toLocaleString("en-US", { month: "long" }) === month
+                );
+            })
+            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+        const totalPages = Math.ceil(monthPosts.length / POSTS_PER_PAGE);
+
+        return Array.from({ length: totalPages }, (_, i) => {
+            const page = i + 1;
+            const start = (page - 1) * POSTS_PER_PAGE;
+            const end = start + POSTS_PER_PAGE;
+
+            return {
+                params: { year, month, page },
+                props: {
+                    posts: monthPosts.slice(start, end),
+                    year,
+                    month,
+                    currentPage: page,
+                    totalPages,
+                },
+            };
+        });
+    });
+}
+
+const { posts, year, month, currentPage, totalPages } = Astro.props;
+---
+
+<BaseLayout title={`Posts from ${month} ${year}`}>
+    <Fragment slot="main">
+        <h1 class="text-3xl font-bold mb-8">Posts from {month} {year}</h1>
+
+        <PostContainer posts={posts} />
+    </Fragment>
+    <Fragment slot="pagination">
+        <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            rootURL={`/${year}/`}
+        />
+    </Fragment>
+</BaseLayout>
